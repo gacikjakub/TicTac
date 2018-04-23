@@ -2,21 +2,21 @@ package coordinates;
 
 public class SimpleCoordinates2D implements Coordinates2DInterface {
 
-    private final int x;
+    private final Integer x;
 
-    private final int y;
+    private final Integer y;
 
 
-    public SimpleCoordinates2D(int x, int y) {
+    public SimpleCoordinates2D(Integer x, Integer y) {
         this.x = x;
         this.y = y;
     }
 
-    public int getX() {
+    public Integer getX() {
         return x;
     }
 
-    public int getY() {
+    public Integer getY() {
         return y;
     }
 
@@ -27,10 +27,7 @@ public class SimpleCoordinates2D implements Coordinates2DInterface {
         } catch (ClassCastException e) {
             return false;
         }
-        if (this.x == casted.x && this.y == casted.y) {
-            return true;
-        }
-        return false;
+        return this.x.equals(casted.x) && this.y.equals(casted.y);
     }
 
     public Coordinates2DInterface getLeft() {

@@ -2,9 +2,9 @@ package coordinates;
 
 public interface Coordinates2DInterface {
 
-    int getX();
+    Integer getX();
 
-    int getY();
+    Integer getY();
 
     Coordinates2DInterface getLeft();
 
