@@ -31,34 +31,34 @@ public class SimpleCoordinates2D implements Coordinates2DInterface {
     }
 
     public Coordinates2DInterface getLeft() {
-        return null;
+        return new SimpleCoordinates2D(this.x-1, this.y);
     }
 
     public Coordinates2DInterface getRight() {
-        return null;
+        return new SimpleCoordinates2D(this.x+1, this.y);
     }
 
     public Coordinates2DInterface getTop() {
-        return null;
+        return new SimpleCoordinates2D(this.x, this.y+1);
     }
 
     public Coordinates2DInterface getBottom() {
-        return null;
+        return new SimpleCoordinates2D(this.x, this.y-1);
     }
 
     public Coordinates2DInterface getTopLeft() {
-        return null;
+        return new SimpleCoordinates2D(this.x-1, this.y+1);
     }
 
     public Coordinates2DInterface getTopRight() {
-        return null;
+        return new SimpleCoordinates2D(this.x+1, this.y+1);
     }
 
     public Coordinates2DInterface getBottomLeft() {
-        return null;
+        return new SimpleCoordinates2D(this.x-1, this.y-1);
     }
 
     public Coordinates2DInterface getBottomRight() {
-        return null;
+        return new SimpleCoordinates2D(this.x+1, this.y-1);
     }
 }
