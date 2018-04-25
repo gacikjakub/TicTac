@@ -2,6 +2,12 @@ package coordinates;
 
 public class SimpleUnsignedCoordinates2D extends SimpleCoordinates2D {
 
+    /**
+     * Constructor for Class. Throw Exception when at least one of given coordinates is negative.
+     * @param x
+     * @param y
+     * @throws ConstructionError
+     */
     public SimpleUnsignedCoordinates2D(Integer x, Integer y) throws ConstructionError {
         super(x, y);
         if (x<0 || y<0) {
@@ -9,6 +15,9 @@ public class SimpleUnsignedCoordinates2D extends SimpleCoordinates2D {
         }
     }
 
+    /**
+     * This exception is throw when creation of object failed
+     */
     class ConstructionError extends Throwable {
         public ConstructionError(String s) {
             super(s);
