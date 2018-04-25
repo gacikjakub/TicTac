@@ -8,3 +8,4 @@ Whole projects was written using technologies, concepts and patterns such as:
 - Walking Skeleton
 - Mockito
 - TestNG
+
