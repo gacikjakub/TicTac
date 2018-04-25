@@ -43,6 +43,7 @@ public class CrossBoard {
      * This exception is throw when operation on kept content has failed.
      */
     class FieldCheckException extends Exception {
+        public static final long serialVersionUID = 19273126L;
         public FieldCheckException(String s) {
             super(s);
         }

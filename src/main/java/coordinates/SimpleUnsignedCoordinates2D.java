@@ -19,6 +19,7 @@ public class SimpleUnsignedCoordinates2D extends SimpleCoordinates2D {
      * This exception is throw when creation of object failed
      */
     class ConstructionError extends Throwable {
+        public static final long serialVersionUID = 273642634236426394L;
         public ConstructionError(String s) {
             super(s);
         }

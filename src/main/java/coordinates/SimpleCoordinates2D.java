@@ -1,5 +1,7 @@
 package coordinates;
 
+import java.util.Objects;
+
 public class SimpleCoordinates2D implements Coordinates2DInterface {
 
     private final Integer x;
@@ -45,6 +47,12 @@ public class SimpleCoordinates2D implements Coordinates2DInterface {
             return false;
         }
         return this.x.equals(casted.x) && this.y.equals(casted.y);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(x, y);
     }
 
     /**
