@@ -61,4 +61,22 @@ public class SimpleCoordinates2D implements Coordinates2DInterface {
     public Coordinates2DInterface getBottomRight() {
         return new SimpleCoordinates2D(this.x+1, this.y-1);
     }
+
+    @Override
+    public int compareTo(Object o) {
+        SimpleCoordinates2D specified = (SimpleCoordinates2D) o;
+        if(this.y < specified.y ) {
+            return 1;
+        }
+        if(this.y > specified.y ) {
+            return -1;
+        }
+        if(this.x < specified.x ) {
+            return -1;
+        }
+        if(this.x > specified.x ) {
+            return 1;
+        }
+        return 0;
+    }
 }

@@ -1,6 +1,6 @@
 package coordinates;
 
-public interface Coordinates2DInterface {
+public interface Coordinates2DInterface extends Comparable {
 
     Integer getX();
 
