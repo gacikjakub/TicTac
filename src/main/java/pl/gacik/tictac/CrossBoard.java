@@ -1,8 +1,6 @@
 package pl.gacik.tictac;
 
-import java.util.Map;
-import java.util.Optional;
-import java.util.TreeMap;
+import java.util.*;
 
 import pl.gacik.coordinates.*;
 
@@ -11,7 +9,32 @@ import pl.gacik.coordinates.*;
  */
 public class CrossBoard {
 
+    /**
+     * 0 - Top
+     * 1 - Right
+     * 2 - Left
+     * 3 - Bottom
+     */
+    Integer[] border = new Integer[]{Integer.MIN_VALUE, Integer.MIN_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE};
+
     private final Map<Coordinates2DInterface, Sign> boardMap = new TreeMap<>();
+
+    private void updateBorder(Coordinates2DInterface coordinates) {
+        int y = coordinates.getY();
+        int x = coordinates.getX();
+        if (y > border[0]) {
+            border[0] = y;
+        }
+        if (y < border[3]) {
+            border[3] = y;
+        }
+        if (x > border[1]) {
+            border[1] = x;
+        }
+        if (x < border[2]) {
+            border[2] = x;
+        }
+    }
 
     /**
      * Allow to add sign under given coordinates.
@@ -24,6 +47,11 @@ public class CrossBoard {
             throw new FieldCheckException("Pair with given key already has been added");
         }
         boardMap.put(coordinates, sign);
+        updateBorder(coordinates);
+    }
+
+    public List<Integer> getBorderValues() {
+        return new LinkedList<Integer>(Arrays.asList(border));
     }
 
     /**
@@ -37,6 +65,10 @@ public class CrossBoard {
             return Optional.of(boardMap.get(coordinates));
         }
         else return Optional.empty();
+    }
+
+    public List<Coordinates2DInterface> getAddedCoordinates() {
+        return new LinkedList<>(boardMap.keySet());
     }
 
     /**
