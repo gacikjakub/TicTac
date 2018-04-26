@@ -1,12 +1,10 @@
 package pl.gacik.coordinates;
 
-import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.Random;
 
-//@Test(dependsOnGroups = {"SimpleCoordinates2DTests"})
 public class SimpleUnsignedCoordinates2DTests {
 
     @DataProvider(name = "10randomNegativeCoordinates")
@@ -38,12 +36,8 @@ public class SimpleUnsignedCoordinates2DTests {
     }
 
     @Test(dataProvider = "10randomNonNegativeCoordinates")
-    public void coordinatesWithNonNegativeXTStillCanBeCreated(Integer x, Integer y) {
-        try {
-            new SimpleUnsignedCoordinates2D(x, y);
-        } catch (IllegalArgumentException e) {
-            Assert.fail("ConstructionError has been handled");
-        }
+    public void coordinatesWithNonNegativeXTStillCanBeCreated(Integer x, Integer y) throws IllegalArgumentException {
+        new SimpleUnsignedCoordinates2D(x, y);
     }
 
 }

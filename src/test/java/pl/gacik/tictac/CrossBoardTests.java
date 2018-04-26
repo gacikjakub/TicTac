@@ -52,13 +52,12 @@ public class CrossBoardTests {
     }
 
     @Test
-    public void objectCanBeInitializedCorrectlyTest()
-    {
+    public void objectCanBeInitializedCorrectly() {
         CrossBoard board = new CrossBoard();
     }
 
     @Test(dataProvider = "10randomUniqueCoordinatesAndSign")
-    public void coordinatesSignPairCanBeAddedToBoardProperlyTest(Integer x, Integer y, Sign sign) {
+    public void coordinatesSignPairCanBeAddedToBoardProperly(Integer x, Integer y, Sign sign) {
         // given
         try {
             board.addPair(coordinates,sign);
@@ -70,7 +69,7 @@ public class CrossBoardTests {
     }
 
     @Test(dataProvider = "10randomUniqueCoordinatesAndSign", expectedExceptions = CrossBoard.FieldCheckException.class)
-    public void addPairThrowFieldCheckExceptionWhenGivenKeyAlreadyExistTest(Integer x, Integer y, Sign sign) throws CrossBoard.FieldCheckException {
+    public void addPairThrowFieldCheckExceptionWhenGivenKeyAlreadyExist(Integer x, Integer y, Sign sign) throws CrossBoard.FieldCheckException {
         board.addPair(coordinates,sign);
         board.addPair(coordinates,sign);
     }
