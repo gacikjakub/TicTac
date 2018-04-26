@@ -1,17 +1,9 @@
-package coordinates;
+package pl.gacik.coordinates;
 
 public interface Coordinates2DInterface extends Comparable {
 
-    /**
-     * Return coordinate X
-     * @return Integer
-     */
     Integer getX();
 
-    /**
-     * Return coordinate Y
-     * @return Integer
-     */
     Integer getY();
 
     /**

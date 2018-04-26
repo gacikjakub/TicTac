@@ -1,4 +1,4 @@
-package coordinates;
+package pl.gacik.coordinates;
 
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -32,8 +32,8 @@ public class SimpleUnsignedCoordinates2DTests {
     }
 
 
-    @Test(dataProvider = "10randomNegativeCoordinates", expectedExceptions = SimpleUnsignedCoordinates2D.ConstructionError.class)
-    public void coordinatesWithNegativeXYCannotBeCreated(Integer x, Integer y) throws SimpleUnsignedCoordinates2D.ConstructionError {
+    @Test(dataProvider = "10randomNegativeCoordinates", expectedExceptions = IllegalArgumentException.class)
+    public void coordinatesWithNegativeXYCannotBeCreated(Integer x, Integer y) {
         new SimpleUnsignedCoordinates2D(x,y);
     }
 
@@ -41,7 +41,7 @@ public class SimpleUnsignedCoordinates2DTests {
     public void coordinatesWithNonNegativeXTStillCanBeCreated(Integer x, Integer y) {
         try {
             new SimpleUnsignedCoordinates2D(x, y);
-        } catch (SimpleUnsignedCoordinates2D.ConstructionError e) {
+        } catch (IllegalArgumentException e) {
             Assert.fail("ConstructionError has been handled");
         }
     }

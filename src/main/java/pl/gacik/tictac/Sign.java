@@ -1,7 +1,7 @@
-package tictac;
+package pl.gacik.tictac;
 
 /**
- * Enum class contains characters, which can be book by Players.
+ * Contains characters, which can be book by Players.
  */
 public enum Sign {
     NOUGHT('O'),
@@ -14,8 +14,7 @@ public enum Sign {
     }
 
     /**
-     * Return char to print
-     * @return
+     * @return char to print
      */
     public char getChar() {
         return sign;

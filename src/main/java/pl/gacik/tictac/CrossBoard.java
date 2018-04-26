@@ -1,23 +1,23 @@
-package tictac;
+package pl.gacik.tictac;
 
 import java.util.Map;
 import java.util.Optional;
 import java.util.TreeMap;
 
-import coordinates.*;
+import pl.gacik.coordinates.*;
 
 /**
- * This class keeping sign added by Player.
+ * Keeping sign added by Player.
  */
 public class CrossBoard {
 
     private final Map<Coordinates2DInterface, Sign> boardMap = new TreeMap<>();
 
     /**
-     * This method allow to add sign under given coordinates.
+     * Allow to add sign under given coordinates.
      * @param coordinates - define location of sign
      * @param sign - define character to print
-     * @throws FieldCheckException - when sign already added under given coordinates
+     * @throws FieldCheckException - when sign is already added under given coordinates
      */
     public void addPair(Coordinates2DInterface coordinates, Sign sign) throws FieldCheckException {
         if(boardMap.containsKey(coordinates)) {
@@ -40,7 +40,7 @@ public class CrossBoard {
     }
 
     /**
-     * This exception is throw when operation on kept content has failed.
+     * Is throw when operation on kept content has failed.
      */
     class FieldCheckException extends Exception {
         public static final long serialVersionUID = 19273126L;

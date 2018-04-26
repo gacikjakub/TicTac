@@ -1,7 +1,7 @@
-package tictac;
+package pl.gacik.tictac;
 
-import coordinates.Coordinates2DInterface;
-import coordinates.SimpleCoordinates2D;
+import pl.gacik.coordinates.Coordinates2DInterface;
+import pl.gacik.coordinates.SimpleCoordinates2D;
 import org.mockito.Mock;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -73,6 +73,12 @@ public class CrossBoardTests {
     public void addPairThrowFieldCheckExceptionWhenGivenKeyAlreadyExistTest(Integer x, Integer y, Sign sign) throws CrossBoard.FieldCheckException {
         board.addPair(coordinates,sign);
         board.addPair(coordinates,sign);
+    }
+
+
+    @Test(dataProvider = "10randomUniqueCoordinatesAndSign")
+    public void getSignReturnEmptyOptionalWhenGivenCoordinatesHasNotBeenAddedToBoard(Integer x, Integer y, Sign sign) {
+        Assert.assertEquals(board.getSign(coordinates), Optional.empty());
     }
 
 
