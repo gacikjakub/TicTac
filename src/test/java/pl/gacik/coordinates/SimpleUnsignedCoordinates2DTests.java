@@ -32,12 +32,12 @@ public class SimpleUnsignedCoordinates2DTests {
 
     @Test(dataProvider = "10randomNegativeCoordinates", expectedExceptions = IllegalArgumentException.class)
     public void coordinatesWithNegativeXYCannotBeCreated(Integer x, Integer y) {
-        new SimpleUnsignedCoordinates2D(x,y);
+        new SimpleUnsignedICoordinates2D(x,y);
     }
 
     @Test(dataProvider = "10randomNonNegativeCoordinates")
     public void coordinatesWithNonNegativeXTStillCanBeCreated(Integer x, Integer y) throws IllegalArgumentException {
-        new SimpleUnsignedCoordinates2D(x, y);
+        new SimpleUnsignedICoordinates2D(x, y);
     }
 
 }

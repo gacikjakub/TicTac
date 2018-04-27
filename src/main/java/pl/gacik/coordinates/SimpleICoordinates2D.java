@@ -2,7 +2,7 @@ package pl.gacik.coordinates;
 
 import java.util.Objects;
 
-public class SimpleCoordinates2D implements Coordinates2DInterface {
+public class SimpleICoordinates2D implements ICoordinates2D {
 
     private final Integer x;
 
@@ -13,7 +13,7 @@ public class SimpleCoordinates2D implements Coordinates2DInterface {
      * @param x
      * @param y
      */
-    public SimpleCoordinates2D(Integer x, Integer y) {
+    public SimpleICoordinates2D(Integer x, Integer y) {
         this.x = x;
         this.y = y;
     }
@@ -37,7 +37,7 @@ public class SimpleCoordinates2D implements Coordinates2DInterface {
      * @return true when Y and X coordinates are the same in both objects.
      */
     public boolean equals(Object o) {
-        SimpleCoordinates2D casted = SimpleCoordinates2D.class.cast(o);
+        SimpleICoordinates2D casted = SimpleICoordinates2D.class.cast(o);
         return this.x.equals(casted.x) && this.y.equals(casted.y);
     }
 
@@ -49,57 +49,57 @@ public class SimpleCoordinates2D implements Coordinates2DInterface {
     /**
      * @return new instance with one less coordinate X.  x-1
      */
-    public Coordinates2DInterface getLeft() {
-        return new SimpleCoordinates2D(this.x-1, this.y);
+    public ICoordinates2D getLeft() {
+        return new SimpleICoordinates2D(this.x-1, this.y);
     }
 
     /**
      * @return new instance with one more coordinate X.  x+1
      */
-    public Coordinates2DInterface getRight() {
-        return new SimpleCoordinates2D(this.x+1, this.y);
+    public ICoordinates2D getRight() {
+        return new SimpleICoordinates2D(this.x+1, this.y);
     }
 
     /**
      * @return new instance with one more coordinate Y.  y+1
      */
-    public Coordinates2DInterface getTop() {
-        return new SimpleCoordinates2D(this.x, this.y+1);
+    public ICoordinates2D getTop() {
+        return new SimpleICoordinates2D(this.x, this.y+1);
     }
 
     /**
      * @return new instance with one less coordinate Y.  y-1
      */
-    public Coordinates2DInterface getBottom() {
-        return new SimpleCoordinates2D(this.x, this.y-1);
+    public ICoordinates2D getBottom() {
+        return new SimpleICoordinates2D(this.x, this.y-1);
     }
 
     /**
      * @return new instance with one more coordinate Y and one less coordinate X.  y+1  x-1
      */
-    public Coordinates2DInterface getTopLeft() {
-        return new SimpleCoordinates2D(this.x-1, this.y+1);
+    public ICoordinates2D getTopLeft() {
+        return new SimpleICoordinates2D(this.x-1, this.y+1);
     }
 
     /**
      * @return new instance with one more coordinate Y and one more coordinate X.  y+1  x+1
      */
-    public Coordinates2DInterface getTopRight() {
-        return new SimpleCoordinates2D(this.x+1, this.y+1);
+    public ICoordinates2D getTopRight() {
+        return new SimpleICoordinates2D(this.x+1, this.y+1);
     }
 
     /**
      * @return new instance with one less coordinate Y and one less coordinate X.  y-1  x-1
      */
-    public Coordinates2DInterface getBottomLeft() {
-        return new SimpleCoordinates2D(this.x-1, this.y-1);
+    public ICoordinates2D getBottomLeft() {
+        return new SimpleICoordinates2D(this.x-1, this.y-1);
     }
 
     /**
      * @return new instance with one less coordinate Y and one more coordinate X.  y-1  x+1
      */
-    public Coordinates2DInterface getBottomRight() {
-        return new SimpleCoordinates2D(this.x+1, this.y-1);
+    public ICoordinates2D getBottomRight() {
+        return new SimpleICoordinates2D(this.x+1, this.y-1);
     }
 
     /**
@@ -110,7 +110,7 @@ public class SimpleCoordinates2D implements Coordinates2DInterface {
      */
     @Override
     public int compareTo(Object o) {
-        SimpleCoordinates2D specified = SimpleCoordinates2D.class.cast(o);
+        SimpleICoordinates2D specified = SimpleICoordinates2D.class.cast(o);
         if(this.y < specified.y ) {
             return 1;
         }
