@@ -7,45 +7,52 @@ import java.util.List;
 
 public class BoardDrawer {
 
-    CrossBoard board;
+    private final CrossBoard board;
+    private final BordersKeeper bordersKeeper;
 
     public BoardDrawer(CrossBoard board) {
         this.board = board;
+        this.bordersKeeper = board.getBordersKeeper();
     }
 
     public void draw() {
         StringBuilder builder = new StringBuilder();
-        List<Integer> border = board.getBorderValues();
         List<Coordinates2DInterface> signs = board.getAddedCoordinates();
-        Coordinates2DInterface cord = signs.remove(0);
+        Coordinates2DInterface cord;
+        if(!signs.isEmpty()) {
+            cord = signs.remove(0);
+        }
+        else {
+            cord = new SimpleCoordinates2D(Integer.MIN_VALUE, Integer.MIN_VALUE);
+        }
         builder.append(" ");
-        for(int x = border.get(2); x<=border.get(1); x++) {
+        for(int x = bordersKeeper.getBorder(BorderDirection.LEFT); x<=bordersKeeper.getBorder(BorderDirection.RIGHT); x++) {
             if(x>-10 && x<100) {
                 builder.append(" ");
             }
             builder.append(x);
-            if(x<0 || x>10) {
+            if(x<0 || x>=10) {
                 builder.append(" ");
             } else {
                 builder.append("  ");
             }
         }
         builder.append("\n");
-        for(int y = border.get(0); y>=border.get(3); y--) {
+        for(int y = bordersKeeper.getBorder(BorderDirection.TOP); y>=bordersKeeper.getBorder(BorderDirection.DOWN); y--) {
 
-            for(int x = border.get(2); x<=border.get(1); x++) {
+            for(int x = bordersKeeper.getBorder(BorderDirection.LEFT); x<=bordersKeeper.getBorder(BorderDirection.RIGHT); x++) {
                 builder.append("+---");
             }
             builder.append("+\n");
-            int x = border.get(2);
-            while (x <= border.get(1)) {
+            int x = bordersKeeper.getBorder(BorderDirection.LEFT);
+            while (x <= bordersKeeper.getBorder(BorderDirection.RIGHT)) {
                 if(cord.getY() == y) {
                     for (x = x; x <= cord.getX() -1; x++) {
                         builder.append("|   ");
                     }
                     builder.append("| ").append(board.getSign(cord).get().getChar()).append(" ");
                     x++;
-                    if(cord.getX().equals(border.get(1))) {
+                    if(cord.getX().equals(bordersKeeper.getBorder(BorderDirection.RIGHT))) {
                         builder.append("|  ").append(y).append("\n");
                     }
                     if (!signs.isEmpty()) {
@@ -56,7 +63,7 @@ public class BoardDrawer {
                     }
                 }
                 else {
-                    for (x = x; x <= border.get(1); x++) {
+                    for (x = x; x <= bordersKeeper.getBorder(BorderDirection.RIGHT); x++) {
                         builder.append("|   ");
                     }
                     x++;
@@ -64,7 +71,7 @@ public class BoardDrawer {
                 }
             }
         }
-        for(int nx = border.get(2); nx<=border.get(1); nx++) {
+        for(int nx = bordersKeeper.getBorder(BorderDirection.LEFT); nx<=bordersKeeper.getBorder(BorderDirection.RIGHT); nx++) {
             builder.append("+---");
         }
         builder.append("+\n");
