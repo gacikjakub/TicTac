@@ -1,22 +1,22 @@
 package pl.gacik.tictac;
 
 import org.testng.annotations.*;
-import pl.gacik.coordinates.SimpleCoordinates2D;
+import pl.gacik.coordinates.SimpleICoordinates2D;
 import java.util.Random;
 
 
 public class LimitedCrossBoardTests {
 
-    public LimitedCrossBoardTests(BoardInterface board) {
+    public LimitedCrossBoardTests(IBoard board) {
         this.board = board;
     }
 
     @BeforeMethod
     public void clearBoard() {
-        this.board = new LimitedCrossBoard(board.getBordersKeeper().getBorder(BorderDirection.RIGHT), board.getBordersKeeper().getBorder(BorderDirection.TOP));
+        this.board = new LimitedCrossIBoard(board.getBordersKeeper().getBorder(BorderDirection.RIGHT), board.getBordersKeeper().getBorder(BorderDirection.TOP));
     }
 
-    private BoardInterface board;
+    private IBoard board;
 
     @DataProvider(name = "10randomPositiveBoardSize")
     public static Object[][] randomPositiveBoardSize() {
@@ -56,20 +56,20 @@ public class LimitedCrossBoardTests {
 
     @Factory(dataProvider = "10randomPositiveBoardSize")
     public LimitedCrossBoardTests(Integer width, Integer height) {
-        this.board = new LimitedCrossBoard(width, height);
+        this.board = new LimitedCrossIBoard(width, height);
     }
 
-    @Test(dataProvider = "10biggerThenBoardSizeCoordinatesAndSign", expectedExceptions = BoardInterface.FieldCheckException.class)
-    public void shouldThrowExceptionWhenGivenCoordinatesAreOutOfMaxSize(Integer x, Integer y, Sign sign) throws BoardInterface.FieldCheckException {
+    @Test(dataProvider = "10biggerThenBoardSizeCoordinatesAndSign", expectedExceptions = IBoard.FieldCheckException.class)
+    public void shouldThrowExceptionWhenGivenCoordinatesAreOutOfMaxSize(Integer x, Integer y, Sign sign) throws IBoard.FieldCheckException {
         // when - then
-        board.addPair(new SimpleCoordinates2D(x,y),sign);
+        board.addPair(new SimpleICoordinates2D(x,y),sign);
     }
 
 
     @Test(dataProvider = "10lowerThenBoardSizeCoordinatesAndSign")
-    public void shouldProperlyAddPairsWithCorrectCoordinates(Integer x, Integer y, Sign sign) throws BoardInterface.FieldCheckException {
+    public void shouldProperlyAddPairsWithCorrectCoordinates(Integer x, Integer y, Sign sign) throws IBoard.FieldCheckException {
         // when - then
-        board.addPair(new SimpleCoordinates2D(x,y),sign);
+        board.addPair(new SimpleICoordinates2D(x,y),sign);
     }
 
 }

@@ -22,14 +22,14 @@ public class SimpleCoordinates2DTests {
 
     @Test(dataProvider = "10randomCoordinates")
     public void objectCanBeInitializedCorrectly(Integer x, Integer y) {
-        Coordinates2DInterface coordinates2D = new SimpleCoordinates2D(x, y);
+        ICoordinates2D coordinates2D = new SimpleICoordinates2D(x, y);
     }
 
     @Test(dataProvider = "10randomCoordinates")
     public void twoObjectsWithSameCoordinatesIsTheSame(Integer x, Integer y) {
         // given
-        Coordinates2DInterface first = new SimpleCoordinates2D(x,y);
-        Coordinates2DInterface second = new SimpleCoordinates2D(x,y);
+        ICoordinates2D first = new SimpleICoordinates2D(x,y);
+        ICoordinates2D second = new SimpleICoordinates2D(x,y);
         // when - then
         Assert.assertEquals(first, second);
     }
@@ -37,7 +37,7 @@ public class SimpleCoordinates2DTests {
     @Test(dataProvider = "10randomCoordinates")
     public void shouldGetInitializedXYValuesCorrectly(Integer x, Integer y) {
         // given
-        Coordinates2DInterface coordinates2D = new SimpleCoordinates2D(x, y);
+        ICoordinates2D coordinates2D = new SimpleICoordinates2D(x, y);
         // when - then
         Assert.assertEquals(coordinates2D.getX(), x);
         Assert.assertEquals(coordinates2D.getY(), y);
@@ -46,65 +46,65 @@ public class SimpleCoordinates2DTests {
     @Test(dataProvider = "10randomCoordinates")
     public void getLeftReturnsObjectWithXCoordinateOneLessThenExecutingObject(Integer x, Integer y) {
         // given
-        Coordinates2DInterface coordinates2D = new SimpleCoordinates2D(x, y);
+        ICoordinates2D coordinates2D = new SimpleICoordinates2D(x, y);
         // when - then
-        Assert.assertEquals(coordinates2D.getLeft(), new SimpleCoordinates2D(x-1, y));
+        Assert.assertEquals(coordinates2D.getLeft(), new SimpleICoordinates2D(x-1, y));
     }
 
     @Test(dataProvider = "10randomCoordinates")
     public void getRightReturnsObjectWithXCoordinateOneMoreThenExecutingObject(Integer x, Integer y) {
         // given
-        Coordinates2DInterface coordinates2D = new SimpleCoordinates2D(x, y);
+        ICoordinates2D coordinates2D = new SimpleICoordinates2D(x, y);
         // when - then
-        Assert.assertEquals(coordinates2D.getRight(), new SimpleCoordinates2D(x+1, y));
+        Assert.assertEquals(coordinates2D.getRight(), new SimpleICoordinates2D(x+1, y));
     }
 
     @Test(dataProvider = "10randomCoordinates")
     public void getTopReturnsObjectWithYCoordinateOneMoreThenExecutingObject(Integer x, Integer y) {
         // given
-        Coordinates2DInterface coordinates2D = new SimpleCoordinates2D(x, y);
+        ICoordinates2D coordinates2D = new SimpleICoordinates2D(x, y);
         // when - then
-        Assert.assertEquals(coordinates2D.getTop(), new SimpleCoordinates2D(x, y+1));
+        Assert.assertEquals(coordinates2D.getTop(), new SimpleICoordinates2D(x, y+1));
     }
 
     @Test(dataProvider = "10randomCoordinates")
     public void getBottomReturnsObjectWithYCoordinateOneLessThenExecutingObject(Integer x, Integer y) {
         // given
-        Coordinates2DInterface coordinates2D = new SimpleCoordinates2D(x, y);
+        ICoordinates2D coordinates2D = new SimpleICoordinates2D(x, y);
         // when - then
-        Assert.assertEquals(coordinates2D.getBottom(), new SimpleCoordinates2D(x, y-1));
+        Assert.assertEquals(coordinates2D.getBottom(), new SimpleICoordinates2D(x, y-1));
     }
 
     @Test(dataProvider = "10randomCoordinates")
     public void getTopLeftReturnsObjectWithYCoordinateOneMoreAndXCoordinateOneLessThenExecutingObject(Integer x, Integer y) {
         // given
-        Coordinates2DInterface coordinates2D = new SimpleCoordinates2D(x, y);
+        ICoordinates2D coordinates2D = new SimpleICoordinates2D(x, y);
         // when - then
-        Assert.assertEquals(coordinates2D.getTopLeft(), new SimpleCoordinates2D(x-1, y+1));
+        Assert.assertEquals(coordinates2D.getTopLeft(), new SimpleICoordinates2D(x-1, y+1));
     }
 
     @Test(dataProvider = "10randomCoordinates")
     public void getTopRightReturnsObjectWithYCoordinateOneMoreAndXCoordinateOneMoreThenExecutingObject(Integer x, Integer y) {
         // given
-        Coordinates2DInterface coordinates2D = new SimpleCoordinates2D(x, y);
+        ICoordinates2D coordinates2D = new SimpleICoordinates2D(x, y);
         // when - then
-        Assert.assertEquals(coordinates2D.getTopRight(), new SimpleCoordinates2D(x+1, y+1));
+        Assert.assertEquals(coordinates2D.getTopRight(), new SimpleICoordinates2D(x+1, y+1));
     }
 
     @Test(dataProvider = "10randomCoordinates")
     public void getBottomLeftReturnsObjectWithYCoordinateOneLessAndXCoordinateOneLessThenExecutingObject(Integer x, Integer y) {
         // given
-        Coordinates2DInterface coordinates2D = new SimpleCoordinates2D(x, y);
+        ICoordinates2D coordinates2D = new SimpleICoordinates2D(x, y);
         // when - then
-        Assert.assertEquals(coordinates2D.getBottomLeft(), new SimpleCoordinates2D(x-1, y-1));
+        Assert.assertEquals(coordinates2D.getBottomLeft(), new SimpleICoordinates2D(x-1, y-1));
     }
 
     @Test(dataProvider = "10randomCoordinates")
     public void getBottomRightReturnsObjectWithYCoordinateOneLessAndXCoordinateOneMoreThenExecutingObject(Integer x, Integer y) {
         // given
-        Coordinates2DInterface coordinates2D = new SimpleCoordinates2D(x, y);
+        ICoordinates2D coordinates2D = new SimpleICoordinates2D(x, y);
         // when - then
-        Assert.assertEquals(coordinates2D.getBottomRight(), new SimpleCoordinates2D(x+1, y-1));
+        Assert.assertEquals(coordinates2D.getBottomRight(), new SimpleICoordinates2D(x+1, y-1));
     }
 
     @DataProvider(name = "10cordAndDelta")
@@ -121,31 +121,31 @@ public class SimpleCoordinates2DTests {
     @Test(dataProvider = "10cordAndDelta")
     public void compareToReturnOneWhenYIsLowerThenInSpecifiedObject(Integer y, Integer delta) {
         // when - then
-        Assert.assertEquals(new SimpleCoordinates2D(0,y).compareTo(new SimpleCoordinates2D(0,y+delta)), 1);
+        Assert.assertEquals(new SimpleICoordinates2D(0,y).compareTo(new SimpleICoordinates2D(0,y+delta)), 1);
     }
 
     @Test(dataProvider = "10cordAndDelta")
     public void compareToReturnMinusOneWhenYIsHigherThenInSpecifiedObject(Integer y, Integer delta) {
         // when - then
-        Assert.assertEquals(new SimpleCoordinates2D(0,y).compareTo(new SimpleCoordinates2D(0,y-delta)), -1);
+        Assert.assertEquals(new SimpleICoordinates2D(0,y).compareTo(new SimpleICoordinates2D(0,y-delta)), -1);
     }
 
     @Test(dataProvider = "10cordAndDelta")
     public void compareToReturnMinusOneWhenXIsLowerThenInSpecifiedObjectAndYIsTheSame(Integer x, Integer delta) {
         // when - then
-        Assert.assertEquals(new SimpleCoordinates2D(x,0).compareTo(new SimpleCoordinates2D(x+delta,0)), -1);
+        Assert.assertEquals(new SimpleICoordinates2D(x,0).compareTo(new SimpleICoordinates2D(x+delta,0)), -1);
     }
 
     @Test(dataProvider = "10cordAndDelta")
     public void compareToReturnOneWhenXIsHigherThenInSpecifiedObjectAndYIsTheSame(Integer x, Integer delta) {
         // when - then
-        Assert.assertEquals(new SimpleCoordinates2D(x,0).compareTo(new SimpleCoordinates2D(x-delta,0)), 1);
+        Assert.assertEquals(new SimpleICoordinates2D(x,0).compareTo(new SimpleICoordinates2D(x-delta,0)), 1);
     }
 
     @Test(dataProvider = "10cordAndDelta")
     public void compareToReturnZeroWhenXAndYAreTheSameLikeInSpecifiedObject(Integer x, Integer delta) {
         // when - then
-        Assert.assertEquals(new SimpleCoordinates2D(x,delta).compareTo(new SimpleCoordinates2D(x,delta)), 0);
+        Assert.assertEquals(new SimpleICoordinates2D(x,delta).compareTo(new SimpleICoordinates2D(x,delta)), 0);
     }
 
 }

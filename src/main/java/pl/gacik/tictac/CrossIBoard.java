@@ -1,6 +1,5 @@
 package pl.gacik.tictac;
 
-import java.nio.ByteOrder;
 import java.util.*;
 
 import pl.gacik.coordinates.*;
@@ -8,14 +7,14 @@ import pl.gacik.coordinates.*;
 /**
  * Keeping sign added by Player.
  */
-public class CrossBoard implements BoardInterface {
+public class CrossIBoard implements IBoard {
 
 
     protected final BordersKeeper bordersKeeper = new BordersKeeper();
 
-    protected final Map<Coordinates2DInterface, Sign> boardMap = new TreeMap<>();
+    protected final Map<ICoordinates2D, Sign> boardMap = new TreeMap<>();
 
-    private void updateBorder(Coordinates2DInterface coordinates) {
+    private void updateBorder(ICoordinates2D coordinates) {
         int y = coordinates.getY();
         int x = coordinates.getX();
         if (y > bordersKeeper.getBorder(BorderDirection.TOP)) {
@@ -39,7 +38,7 @@ public class CrossBoard implements BoardInterface {
      * @throws FieldCheckException - when sign is already added under given coordinates
      */
     @Override
-    public void addPair(Coordinates2DInterface coordinates, Sign sign) throws FieldCheckException {
+    public void addPair(ICoordinates2D coordinates, Sign sign) throws FieldCheckException {
         if(boardMap.containsKey(coordinates)) {
             throw new FieldCheckException("Pair with given key already has been added");
         }
@@ -59,15 +58,12 @@ public class CrossBoard implements BoardInterface {
      * @return Optional<Sign>
      */
     @Override
-    public Optional<Sign> getSign(Coordinates2DInterface coordinates) {
-        if(boardMap.containsKey(coordinates)) {
-            return Optional.of(boardMap.get(coordinates));
-        }
-        else return Optional.empty();
+    public Optional<Sign> getSign(ICoordinates2D coordinates) {
+        return Optional.ofNullable(boardMap.get(coordinates));
     }
 
     @Override
-    public List<Coordinates2DInterface> getAddedCoordinates() {
+    public List<ICoordinates2D> getAddedCoordinates() {
         return new LinkedList<>(boardMap.keySet());
     }
 

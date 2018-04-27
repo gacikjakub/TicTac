@@ -1,13 +1,13 @@
 package pl.gacik.tictac;
 
-import pl.gacik.coordinates.Coordinates2DInterface;
+import pl.gacik.coordinates.ICoordinates2D;
 
-public class LimitedCrossBoard extends CrossBoard {
+public class LimitedCrossIBoard extends CrossIBoard {
 
     private final Integer width;
     private final Integer height;
 
-    public LimitedCrossBoard(int width, int height) {
+    public LimitedCrossIBoard(int width, int height) {
         this.width = width;
         this.height = height;
         this.bordersKeeper.updateBorder(BorderDirection.TOP, height);
@@ -16,13 +16,13 @@ public class LimitedCrossBoard extends CrossBoard {
         this.bordersKeeper.updateBorder(BorderDirection.LEFT, 1);
     }
 
-    private boolean checkCoordinates(Coordinates2DInterface coordinates) {
+    private boolean checkIfCoordinatesAreCorrect(ICoordinates2D coordinates) {
         return !(coordinates.getY() > height ||  coordinates.getY() < 1 || coordinates.getX() > width || coordinates.getX() < 1);
     }
 
     @Override
-    public void addPair(Coordinates2DInterface coordinates, Sign sign) throws FieldCheckException {
-        if(!checkCoordinates(coordinates)) {
+    public void addPair(ICoordinates2D coordinates, Sign sign) throws FieldCheckException {
+        if(!checkIfCoordinatesAreCorrect(coordinates)) {
             throw new FieldCheckException("Given coordinates are out of max size of board");
         }
         if(boardMap.containsKey(coordinates)) {

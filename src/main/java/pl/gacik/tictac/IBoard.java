@@ -1,15 +1,18 @@
 package pl.gacik.tictac;
 
-import pl.gacik.coordinates.Coordinates2DInterface;
+import pl.gacik.coordinates.ICoordinates2D;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface BoardInterface {
+public interface IBoard {
 
-    void addPair(Coordinates2DInterface coordinates, Sign sign) throws FieldCheckException;
-    List<Coordinates2DInterface> getAddedCoordinates();
-    Optional<Sign> getSign(Coordinates2DInterface coordinates);
+    void addPair(ICoordinates2D coordinates, Sign sign) throws FieldCheckException;
+
+    List<ICoordinates2D> getAddedCoordinates();
+
+    Optional<Sign> getSign(ICoordinates2D coordinates);
+
     BordersKeeper getBordersKeeper();
 
     /**
