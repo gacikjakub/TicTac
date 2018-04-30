@@ -10,7 +10,7 @@ public class SignHolder {
 
     public void attachPlayer(Player player, Sign sign) throws IllegalArgumentException {
         if(signPlayerMap.containsKey(sign)) {
-            throw new IllegalArgumentException("This sign has already booked by another player");
+            throw new IllegalArgumentException("This sign has been already booked by another player");
         }
         signPlayerMap.put(sign,player);
     }

@@ -16,7 +16,7 @@ public class TurnHolder {
     /**
      * @return Player whose the next turn is
      */
-    public Player getNext() {
+    public Player getNextPlayer() {
         Player current = turnQueue.remove();
         turnQueue.add(current);
         return current;

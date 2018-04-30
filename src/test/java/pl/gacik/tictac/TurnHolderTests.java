@@ -28,7 +28,7 @@ public class TurnHolderTests {
         TurnHolder turnHolder = new TurnHolder(player1, player2, player3);
         // when - then
         for (int i = 0; i < 200; i++) {
-            if (!turnHolder.getNext().getName().equals(names[i % names.length])) {
+            if (!turnHolder.getNextPlayer().getName().equals(names[i % names.length])) {
                 Assert.fail();
             }
         }
