@@ -19,7 +19,7 @@ public class TurnHolderTests {
     private Player player3 = Mockito.mock(Player.class);
 
     @Test
-    public void shouldGetNextReturnAddedPlayerAlternately() {
+    public void shouldGetNextPlayerReturnAddedPlayerAlternately() {
         // given
         String[] names = new String[]{"Franc", "Jane", "Alex"};
         when(player1.getName()).thenReturn(names[0]);
