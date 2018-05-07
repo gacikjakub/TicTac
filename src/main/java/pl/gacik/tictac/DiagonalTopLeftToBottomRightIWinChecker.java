@@ -4,26 +4,22 @@ import pl.gacik.coordinates.ICoordinates2D;
 
 import java.util.Optional;
 
-public class DiagonalTopLeftToBottomRightWinChecker implements WinChecker {
+public class DiagonalTopLeftToBottomRightIWinChecker extends WinChecker {
 
-    private int requiredSeries;
-
-    private IBoard board;
-
-    public DiagonalTopLeftToBottomRightWinChecker(IBoard board) {
-        this.board = board;
+    public DiagonalTopLeftToBottomRightIWinChecker(IBoard board) {
+        super(board);
     }
 
     @Override
     public boolean victoryAchieved(ICoordinates2D lastMove) {
         Optional<Sign> lastSign = board.getSign(lastMove);
         if (!lastSign.isPresent()) {
-            throw new IllegalArgumentException("Under Given Coordinates is no any sign");
+            throw new IllegalArgumentException("There is no sign under given coordinates");
         }
         int counter = 1;
         counter += seriesGoingBottomRight(lastMove.getBottomRight(), lastSign.get());
         counter += seriesGoingTopLeft(lastMove.getTopLeft(), lastSign.get());
-        return (counter >= requiredSeries);
+        return (counter >= requiredSeriesLength);
     }
 
     private int seriesGoingBottomRight(ICoordinates2D coordinates, Sign sign) {
@@ -39,8 +35,8 @@ public class DiagonalTopLeftToBottomRightWinChecker implements WinChecker {
     }
 
     @Override
-    public void setRequiredSeries(int requiredSeries) {
-        this.requiredSeries = requiredSeries;
+    public void setRequiredSeriesLength(int requiredSeriesLength) {
+        this.requiredSeriesLength = requiredSeriesLength;
     }
 
 }

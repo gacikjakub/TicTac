@@ -8,7 +8,7 @@ import pl.gacik.coordinates.SimpleICoordinates2D;
 
 import java.util.Random;
 
-public class DiagonalTopLeftToBottomRightWinCheckerTests {
+public class DiagonalBottomLeftToTopRightIWinCheckerTests {
 
     @DataProvider(name = "signs")
     private Object[][] signs() {
@@ -23,58 +23,58 @@ public class DiagonalTopLeftToBottomRightWinCheckerTests {
     }
 
     @Test(dataProvider = "signs")
-    public void shouldReturnTrueWhenAchievedRequiredSignAmount(Sign sign) throws IBoard.FieldCheckException {
+    public void shouldReturnTrueWhenAchievedRequiredSignsAmount(Sign sign) throws IBoard.FieldCheckException {
         // given
         IBoard board = new CrossIBoard();
         ICoordinates2D lastCoordinates = null;
         for(int i=0; i < 5; i ++) {
-            lastCoordinates = new SimpleICoordinates2D(i,5-i);
+            lastCoordinates = new SimpleICoordinates2D(i,i);
             board.addPair(lastCoordinates, sign);
         }
-        WinChecker winChecker = new DiagonalTopLeftToBottomRightWinChecker(board);
-        winChecker.setRequiredSeries(5);
+        IWinChecker IWinChecker = new DiagonalBottomLeftToTopRightIWinChecker(board);
+        IWinChecker.setRequiredSeriesLength(5);
         // when - then
-        Assert.assertTrue(winChecker.victoryAchieved(lastCoordinates));
-        Assert.assertTrue(winChecker.victoryAchieved(lastCoordinates.getTopLeft().getTopLeft()));
+        Assert.assertTrue(IWinChecker.victoryAchieved(lastCoordinates));
+        Assert.assertTrue(IWinChecker.victoryAchieved(lastCoordinates.getBottomLeft().getBottomLeft()));
     }
 
     @Test(dataProvider = "signs")
-    public void shouldReturnFalseWhenDoNotAchievedRequiredSignAmount(Sign sign) throws IBoard.FieldCheckException {
+    public void shouldReturnFalseWhenDoNotAchievedRequiredSignsAmount(Sign sign) throws IBoard.FieldCheckException {
         // given
         IBoard board = new CrossIBoard();
         ICoordinates2D lastCoordinates = null;
         for(int i=0; i < 8; i ++) {
-            lastCoordinates = new SimpleICoordinates2D(i,8-i);
+            lastCoordinates = new SimpleICoordinates2D(i,i);
             board.addPair(lastCoordinates, sign);
         }
-        WinChecker winChecker = new DiagonalTopLeftToBottomRightWinChecker(board);
-        winChecker.setRequiredSeries(10);
+        IWinChecker IWinChecker = new DiagonalBottomLeftToTopRightIWinChecker(board);
+        IWinChecker.setRequiredSeriesLength(10);
         // when - then
-        Assert.assertFalse(winChecker.victoryAchieved(lastCoordinates));
-        Assert.assertFalse(winChecker.victoryAchieved(lastCoordinates.getTopLeft().getTopLeft()));
+        Assert.assertFalse(IWinChecker.victoryAchieved(lastCoordinates));
+        Assert.assertFalse(IWinChecker.victoryAchieved(lastCoordinates.getBottomLeft().getBottomLeft()));
     }
 
     @Test(dataProvider = "signs")
-    public void shouldReturnFalseWhenRequiredSignAmountInColumnIsOkButSeparatedOtherSign(Sign sign) throws IBoard.FieldCheckException {
+    public void shouldReturnFalseWhenRequiredSignsAmountInColumnIsOkButSeparatedOtherSign(Sign sign) throws IBoard.FieldCheckException {
         // given
         IBoard board = new CrossIBoard();
         ICoordinates2D lastCoordinates = null;
         int i = 0;
         for(;i < 4; i ++) {
-            lastCoordinates = new SimpleICoordinates2D(i,4-i);
+            lastCoordinates = new SimpleICoordinates2D(i,i);
             board.addPair(lastCoordinates, sign);
         }
-        board.addPair(lastCoordinates.getRight(), randomDifferentSign(sign));
+        board.addPair(lastCoordinates.getTopRight(), randomDifferentSign(sign));
         i++;
         for(; i < 10; i++) {
-            lastCoordinates = new SimpleICoordinates2D(i,10-i);
+            lastCoordinates = new SimpleICoordinates2D(i,i);
             board.addPair(lastCoordinates, sign);
         }
-        WinChecker winChecker = new DiagonalTopLeftToBottomRightWinChecker(board);
-        winChecker.setRequiredSeries(8);
+        IWinChecker IWinChecker = new DiagonalBottomLeftToTopRightIWinChecker(board);
+        IWinChecker.setRequiredSeriesLength(8);
         // when - then
-        Assert.assertFalse(winChecker.victoryAchieved(lastCoordinates));
-        Assert.assertFalse(winChecker.victoryAchieved(lastCoordinates.getTopLeft().getTopLeft()));
+        Assert.assertFalse(IWinChecker.victoryAchieved(lastCoordinates));
+        Assert.assertFalse(IWinChecker.victoryAchieved(lastCoordinates.getBottomLeft().getBottomLeft()));
     }
 
     @Test(dataProvider = "signs", expectedExceptions = IllegalArgumentException.class)
@@ -84,13 +84,13 @@ public class DiagonalTopLeftToBottomRightWinCheckerTests {
         ICoordinates2D lastCoordinates = null;
         int i = 0;
         for(;i < 4; i ++) {
-            lastCoordinates = new SimpleICoordinates2D(i,4-i);
+            lastCoordinates = new SimpleICoordinates2D(i,i);
             board.addPair(lastCoordinates, sign);
         }
-        WinChecker winChecker = new DiagonalTopLeftToBottomRightWinChecker(board);
-        winChecker.setRequiredSeries(8);
+        IWinChecker IWinChecker = new DiagonalBottomLeftToTopRightIWinChecker(board);
+        IWinChecker.setRequiredSeriesLength(8);
         // when - then
-     winChecker.victoryAchieved(lastCoordinates.getTop());
+        IWinChecker.victoryAchieved(lastCoordinates.getTop());
     }
 
     private Sign randomDifferentSign(Sign s) {

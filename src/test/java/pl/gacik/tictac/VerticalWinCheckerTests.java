@@ -23,7 +23,7 @@ public class VerticalWinCheckerTests {
     }
 
     @Test(dataProvider = "signs")
-    public void shouldReturnTrueWhenAchievedRequiredSignAmount(Sign sign) throws IBoard.FieldCheckException {
+    public void shouldReturnTrueWhenAchievedRequiredSignsAmount(Sign sign) throws IBoard.FieldCheckException {
         // given
         IBoard board = new CrossIBoard();
         ICoordinates2D lastCoordinates = null;
@@ -31,15 +31,15 @@ public class VerticalWinCheckerTests {
             lastCoordinates = new SimpleICoordinates2D(i,1);
             board.addPair(lastCoordinates, sign);
         }
-        WinChecker winChecker = new VerticalWinChecker(board);
-        winChecker.setRequiredSeries(5);
+        IWinChecker IWinChecker = new VerticalWinChecker(board);
+        IWinChecker.setRequiredSeriesLength(5);
         // when - then
-        Assert.assertTrue(winChecker.victoryAchieved(lastCoordinates));
-        Assert.assertTrue(winChecker.victoryAchieved(lastCoordinates.getLeft().getLeft()));
+        Assert.assertTrue(IWinChecker.victoryAchieved(lastCoordinates));
+        Assert.assertTrue(IWinChecker.victoryAchieved(lastCoordinates.getLeft().getLeft()));
     }
 
     @Test(dataProvider = "signs")
-    public void shouldReturnFalseWhenDoNotAchievedRequiredSignAmount(Sign sign) throws IBoard.FieldCheckException {
+    public void shouldReturnFalseWhenDoNotAchievedRequiredSignsAmount(Sign sign) throws IBoard.FieldCheckException {
         // given
         IBoard board = new CrossIBoard();
         ICoordinates2D lastCoordinates = null;
@@ -47,15 +47,15 @@ public class VerticalWinCheckerTests {
             lastCoordinates = new SimpleICoordinates2D(i,1);
             board.addPair(lastCoordinates, sign);
         }
-        WinChecker winChecker = new VerticalWinChecker(board);
-        winChecker.setRequiredSeries(10);
+        IWinChecker IWinChecker = new VerticalWinChecker(board);
+        IWinChecker.setRequiredSeriesLength(10);
         // when - then
-        Assert.assertFalse(winChecker.victoryAchieved(lastCoordinates));
-        Assert.assertFalse(winChecker.victoryAchieved(lastCoordinates.getLeft().getLeft()));
+        Assert.assertFalse(IWinChecker.victoryAchieved(lastCoordinates));
+        Assert.assertFalse(IWinChecker.victoryAchieved(lastCoordinates.getLeft().getLeft()));
     }
 
     @Test(dataProvider = "signs")
-    public void shouldReturnFalseWhenRequiredSignAmountInColumnIsOkButSeparatedOtherSign(Sign sign) throws IBoard.FieldCheckException {
+    public void shouldReturnFalseWhenRequiredSignsAmountInColumnIsOkButSeparatedOtherSign(Sign sign) throws IBoard.FieldCheckException {
         // given
         IBoard board = new CrossIBoard();
         ICoordinates2D lastCoordinates = null;
@@ -70,11 +70,11 @@ public class VerticalWinCheckerTests {
             lastCoordinates = new SimpleICoordinates2D(i,1);
             board.addPair(lastCoordinates, sign);
         }
-        WinChecker winChecker = new VerticalWinChecker(board);
-        winChecker.setRequiredSeries(8);
+        IWinChecker IWinChecker = new VerticalWinChecker(board);
+        IWinChecker.setRequiredSeriesLength(8);
         // when - then
-        Assert.assertFalse(winChecker.victoryAchieved(lastCoordinates));
-        Assert.assertFalse(winChecker.victoryAchieved(lastCoordinates.getLeft().getLeft()));
+        Assert.assertFalse(IWinChecker.victoryAchieved(lastCoordinates));
+        Assert.assertFalse(IWinChecker.victoryAchieved(lastCoordinates.getLeft().getLeft()));
     }
 
     @Test(dataProvider = "signs", expectedExceptions = IllegalArgumentException.class)
@@ -87,10 +87,10 @@ public class VerticalWinCheckerTests {
             lastCoordinates = new SimpleICoordinates2D(i,1);
             board.addPair(lastCoordinates, sign);
         }
-        WinChecker winChecker = new VerticalWinChecker(board);
-        winChecker.setRequiredSeries(8);
+        IWinChecker IWinChecker = new VerticalWinChecker(board);
+        IWinChecker.setRequiredSeriesLength(8);
         // when - then
-     winChecker.victoryAchieved(lastCoordinates.getTop());
+        IWinChecker.victoryAchieved(lastCoordinates.getTop());
     }
 
     private Sign randomDifferentSign(Sign s) {
