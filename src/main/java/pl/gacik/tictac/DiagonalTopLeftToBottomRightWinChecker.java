@@ -4,14 +4,13 @@ import pl.gacik.coordinates.ICoordinates2D;
 
 import java.util.Optional;
 
-public class HorizontalWinChecker implements WinChecker {
-
+public class DiagonalTopLeftToBottomRightWinChecker implements WinChecker {
 
     private int requiredSeries;
 
     private IBoard board;
 
-    public HorizontalWinChecker(IBoard board) {
+    public DiagonalTopLeftToBottomRightWinChecker(IBoard board) {
         this.board = board;
     }
 
@@ -22,25 +21,26 @@ public class HorizontalWinChecker implements WinChecker {
             throw new IllegalArgumentException("Under Given Coordinates is no any sign");
         }
         int counter = 1;
-        counter += seriesGoingDown(lastMove.getBottom(), lastSign.get());
-        counter += seriesGoingUp(lastMove.getTop(), lastSign.get());
+        counter += seriesGoingBottomRight(lastMove.getBottomRight(), lastSign.get());
+        counter += seriesGoingTopLeft(lastMove.getTopLeft(), lastSign.get());
         return (counter >= requiredSeries);
     }
 
-    private int seriesGoingDown(ICoordinates2D coordinates, Sign sign) {
+    private int seriesGoingBottomRight(ICoordinates2D coordinates, Sign sign) {
         if(!board.getSign(coordinates).isPresent()) return 0;
         if(board.getSign(coordinates).get() != sign) return 0;
-        return 1 + seriesGoingDown(coordinates.getBottom(), sign);
+        return 1 + seriesGoingBottomRight(coordinates.getBottomRight(), sign);
     }
 
-    private int seriesGoingUp(ICoordinates2D coordinates, Sign sign) {
+    private int seriesGoingTopLeft(ICoordinates2D coordinates, Sign sign) {
         if(!board.getSign(coordinates).isPresent()) return 0;
         if(board.getSign(coordinates).get() != sign) return 0;
-        return 1 + seriesGoingUp(coordinates.getTop(), sign);
+        return 1 + seriesGoingTopLeft(coordinates.getTopLeft(), sign);
     }
 
     @Override
     public void setRequiredSeries(int requiredSeries) {
         this.requiredSeries = requiredSeries;
     }
+
 }
