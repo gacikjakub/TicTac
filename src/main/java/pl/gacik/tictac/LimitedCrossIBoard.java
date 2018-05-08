@@ -31,4 +31,10 @@ public class LimitedCrossIBoard extends CrossIBoard {
         boardMap.put(coordinates, sign);
     }
 
+    @Override
+    public boolean hasAvailableField() {
+        return (boardMap.size() < (Math.abs(bordersKeeper.getBorder(BorderDirection.TOP) - bordersKeeper.getBorder(BorderDirection.DOWN)) *
+                Math.abs(bordersKeeper.getBorder(BorderDirection.RIGHT) - bordersKeeper.getBorder(BorderDirection.LEFT))));
+    }
+
 }

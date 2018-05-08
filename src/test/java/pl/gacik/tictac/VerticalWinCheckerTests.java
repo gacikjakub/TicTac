@@ -27,15 +27,15 @@ public class VerticalWinCheckerTests {
         // given
         IBoard board = new CrossIBoard();
         ICoordinates2D lastCoordinates = null;
-        for(int i=0; i < 5; i ++) {
-            lastCoordinates = new SimpleICoordinates2D(i,1);
-            board.addPair(lastCoordinates, sign);
-        }
         IWinChecker IWinChecker = new VerticalWinChecker(board);
         IWinChecker.setRequiredSeriesLength(5);
+        for(int i=0; i < 5; i ++) {
+            lastCoordinates = new SimpleICoordinates2D(1,i);
+            board.addPair(lastCoordinates, sign);
+        }
         // when - then
         Assert.assertTrue(IWinChecker.victoryAchieved(lastCoordinates));
-        Assert.assertTrue(IWinChecker.victoryAchieved(lastCoordinates.getLeft().getLeft()));
+        Assert.assertTrue(IWinChecker.victoryAchieved(lastCoordinates.getBottom().getBottom()));
     }
 
     @Test(dataProvider = "signs")
@@ -43,15 +43,15 @@ public class VerticalWinCheckerTests {
         // given
         IBoard board = new CrossIBoard();
         ICoordinates2D lastCoordinates = null;
-        for(int i=0; i < 8; i ++) {
-            lastCoordinates = new SimpleICoordinates2D(i,1);
-            board.addPair(lastCoordinates, sign);
-        }
         IWinChecker IWinChecker = new VerticalWinChecker(board);
         IWinChecker.setRequiredSeriesLength(10);
+        for(int i=0; i < 8; i ++) {
+            lastCoordinates = new SimpleICoordinates2D(1,i);
+            board.addPair(lastCoordinates, sign);
+        }
         // when - then
         Assert.assertFalse(IWinChecker.victoryAchieved(lastCoordinates));
-        Assert.assertFalse(IWinChecker.victoryAchieved(lastCoordinates.getLeft().getLeft()));
+        Assert.assertFalse(IWinChecker.victoryAchieved(lastCoordinates.getBottom().getBottom()));
     }
 
     @Test(dataProvider = "signs")
@@ -61,20 +61,20 @@ public class VerticalWinCheckerTests {
         ICoordinates2D lastCoordinates = null;
         int i = 0;
         for(;i < 4; i ++) {
-            lastCoordinates = new SimpleICoordinates2D(i,1);
+            lastCoordinates = new SimpleICoordinates2D(1,i);
             board.addPair(lastCoordinates, sign);
         }
-        board.addPair(lastCoordinates.getRight(), randomDifferentSign(sign));
+        board.addPair(lastCoordinates.getTop(), randomDifferentSign(sign));
         i++;
         for(; i < 10; i++) {
-            lastCoordinates = new SimpleICoordinates2D(i,1);
+            lastCoordinates = new SimpleICoordinates2D(1,i);
             board.addPair(lastCoordinates, sign);
         }
         IWinChecker IWinChecker = new VerticalWinChecker(board);
         IWinChecker.setRequiredSeriesLength(8);
         // when - then
         Assert.assertFalse(IWinChecker.victoryAchieved(lastCoordinates));
-        Assert.assertFalse(IWinChecker.victoryAchieved(lastCoordinates.getLeft().getLeft()));
+        Assert.assertFalse(IWinChecker.victoryAchieved(lastCoordinates.getBottom().getBottom()));
     }
 
     @Test(dataProvider = "signs", expectedExceptions = IllegalArgumentException.class)
@@ -84,13 +84,13 @@ public class VerticalWinCheckerTests {
         ICoordinates2D lastCoordinates = null;
         int i = 0;
         for(;i < 4; i ++) {
-            lastCoordinates = new SimpleICoordinates2D(i,1);
+            lastCoordinates = new SimpleICoordinates2D(1,i);
             board.addPair(lastCoordinates, sign);
         }
         IWinChecker IWinChecker = new VerticalWinChecker(board);
         IWinChecker.setRequiredSeriesLength(8);
         // when - then
-        IWinChecker.victoryAchieved(lastCoordinates.getTop());
+        IWinChecker.victoryAchieved(lastCoordinates.getLeft());
     }
 
     private Sign randomDifferentSign(Sign s) {

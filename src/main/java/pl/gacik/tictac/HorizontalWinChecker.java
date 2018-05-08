@@ -17,20 +17,28 @@ public class HorizontalWinChecker extends WinChecker {
             throw new IllegalArgumentException("There is no sign under given coordinates");
         }
         int counter = 1;
-        counter += seriesGoingDown(lastMove.getBottom(), lastSign.get());
-        counter += seriesGoingUp(lastMove.getTop(), lastSign.get());
+        counter += seriesGoingLeft(lastMove.getLeft(), lastSign.get());
+        counter += seriesGoingRight(lastMove.getRight(), lastSign.get());
         return (counter >= requiredSeriesLength);
     }
 
-    private int seriesGoingDown(ICoordinates2D coordinates, Sign sign) {
+    private int seriesGoingLeft(ICoordinates2D coordinates, Sign sign) {
         if(!board.getSign(coordinates).isPresent()) return 0;
         if(board.getSign(coordinates).get() != sign) return 0;
-        return 1 + seriesGoingDown(coordinates.getBottom(), sign);
+        return 1 + seriesGoingLeft(coordinates.getLeft(), sign);
     }
 
-    private int seriesGoingUp(ICoordinates2D coordinates, Sign sign) {
+    private int seriesGoingRight(ICoordinates2D coordinates, Sign sign) {
         if(!board.getSign(coordinates).isPresent()) return 0;
         if(board.getSign(coordinates).get() != sign) return 0;
-        return 1 + seriesGoingUp(coordinates.getTop(), sign);
+        return 1 + seriesGoingRight(coordinates.getRight(), sign);
+    }
+
+    @Override
+    public void setRequiredSeriesLength(long requiredSeriesLength) {
+//        if(requiredSeriesLength > Math.abs(board.getBordersKeeper().getBorder(BorderDirection.RIGHT) - board.getBordersKeeper().getBorder(BorderDirection.LEFT))) {
+//            throw new IllegalArgumentException("Given series length do not allow to win");
+//        }
+        super.setRequiredSeriesLength(requiredSeriesLength);
     }
 }

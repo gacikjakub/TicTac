@@ -15,6 +15,10 @@ public interface IBoard {
 
     BordersKeeper getBordersKeeper();
 
+    default boolean hasAvailableField() {
+        return true;
+    }
+
     /**
      * Is throw when operation on kept content has failed.
      */
@@ -24,6 +28,8 @@ public interface IBoard {
             super(s);
         }
     }
+
+
 
 
 }

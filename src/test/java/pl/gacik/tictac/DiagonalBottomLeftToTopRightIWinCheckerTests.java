@@ -43,12 +43,12 @@ public class DiagonalBottomLeftToTopRightIWinCheckerTests {
         // given
         IBoard board = new CrossIBoard();
         ICoordinates2D lastCoordinates = null;
+        IWinChecker IWinChecker = new DiagonalBottomLeftToTopRightIWinChecker(board);
+        IWinChecker.setRequiredSeriesLength(10);
         for(int i=0; i < 8; i ++) {
             lastCoordinates = new SimpleICoordinates2D(i,i);
             board.addPair(lastCoordinates, sign);
         }
-        IWinChecker IWinChecker = new DiagonalBottomLeftToTopRightIWinChecker(board);
-        IWinChecker.setRequiredSeriesLength(10);
         // when - then
         Assert.assertFalse(IWinChecker.victoryAchieved(lastCoordinates));
         Assert.assertFalse(IWinChecker.victoryAchieved(lastCoordinates.getBottomLeft().getBottomLeft()));

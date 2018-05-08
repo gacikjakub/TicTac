@@ -9,8 +9,15 @@ public class TurnHolder {
 
     public TurnHolder(Player... players) {
         for (Player player :players) {
+            if(player == null) {
+                throw new IllegalArgumentException("Player cannot be null");
+            }
             turnQueue.add(player);
         }
+    }
+
+    public int getPlayersAmount() {
+        return turnQueue.size();
     }
 
     /**

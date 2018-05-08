@@ -6,6 +6,6 @@ public interface IWinChecker {
 
     boolean victoryAchieved(ICoordinates2D lastMove);
 
-    void setRequiredSeriesLength(int requiredSeriesLength);
+    void setRequiredSeriesLength(long requiredSeriesLength);
 
 }
