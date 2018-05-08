@@ -1,5 +1,6 @@
 package pl.gacik.tictac;
 
+import org.testng.Assert;
 import org.testng.annotations.*;
 import pl.gacik.coordinates.SimpleICoordinates2D;
 import java.util.Random;
@@ -42,6 +43,18 @@ public class LimitedCrossBoardTests {
         return result;
     }
 
+    @DataProvider(name = "signs")
+    private Object[][] signs() {
+        int signsAmount = Sign.values().length;
+        Object[][] result = new Object[signsAmount][1];
+        int counter = 0;
+        for(Sign sign: Sign.values()) {
+            result[counter][0] = sign;
+            counter++;
+        }
+        return result;
+    }
+
     @DataProvider(name = "10lowerThenBoardSizeCoordinatesAndSign")
     public static Object[][] lowerThenBoardSizeCoordinatesAndSign() {
         Random generator = new Random();
@@ -70,6 +83,30 @@ public class LimitedCrossBoardTests {
     public void shouldProperlyAddPairsWithCorrectCoordinates(Integer x, Integer y, Sign sign) throws IBoard.FieldCheckException {
         // when - then
         board.addPair(new SimpleICoordinates2D(x,y),sign);
+    }
+
+    @Test(dataProvider = "signs")
+    public void shouldReturnFalseWhenBoardHasNoAvailableField(Sign sign) throws IBoard.FieldCheckException {
+        // given
+        for(int x = 1; x< this.board.getBordersKeeper().getBorder(BorderDirection.RIGHT); x++) {
+            for(int y = 1; y< this.board.getBordersKeeper().getBorder(BorderDirection.TOP); y++) {
+                this.board.addPair(new SimpleICoordinates2D(x,y),sign);
+            }
+        }
+        // when - then
+        Assert.assertFalse(this.board.hasAvailableField());
+    }
+
+    @Test(dataProvider = "signs")
+    public void shouldReturnTrueWhenBoardHasAvailableFields(Sign sign) throws IBoard.FieldCheckException {
+        // given
+        for(int x = 1; x< this.board.getBordersKeeper().getBorder(BorderDirection.RIGHT); x++) {
+            for(int y = 1; y< this.board.getBordersKeeper().getBorder(BorderDirection.TOP) -1; y++) {
+                this.board.addPair(new SimpleICoordinates2D(x,y),sign);
+            }
+        }
+        // when - then
+        Assert.assertTrue(this.board.hasAvailableField());
     }
 
 }

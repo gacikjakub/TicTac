@@ -35,8 +35,12 @@ public class DiagonalTopLeftToBottomRightIWinChecker extends WinChecker {
     }
 
     @Override
-    public void setRequiredSeriesLength(int requiredSeriesLength) {
-        this.requiredSeriesLength = requiredSeriesLength;
+    public void setRequiredSeriesLength(long requiredSeriesLength) {
+//        if(requiredSeriesLength > Math.sqrt(Math.pow(Math.abs(board.getBordersKeeper().getBorder(BorderDirection.TOP) - board.getBordersKeeper().getBorder(BorderDirection.DOWN)), 2) +
+//                Math.pow(Math.abs(board.getBordersKeeper().getBorder(BorderDirection.RIGHT) - board.getBordersKeeper().getBorder(BorderDirection.LEFT)), 2))) {
+//            throw new IllegalArgumentException("Given series length do not allow to win");
+//        } // TODO: pow operation with MAX_INT
+        super.setRequiredSeriesLength(requiredSeriesLength);
     }
 
 }

@@ -19,20 +19,8 @@ public class GameSettings {
         this.board = board;
     }
 
-    public TurnHolder getTurnHolder() {
-        return turnHolder;
-    }
-
-    public void setTurnHolder(TurnHolder turnHolder) {
-        if(turnHolder == null) {
-            throw new IllegalArgumentException("turnHolder cannot be null");
-        }
-        this.turnHolder = turnHolder;
-    }
 
     private IBoard board;
-
-    private TurnHolder turnHolder;
 
     private SignHolder signHolder = new SignHolder();
 

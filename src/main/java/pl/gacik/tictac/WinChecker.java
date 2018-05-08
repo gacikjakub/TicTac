@@ -2,7 +2,7 @@ package pl.gacik.tictac;
 
 public abstract class WinChecker implements IWinChecker {
 
-    protected int requiredSeriesLength;
+    protected long requiredSeriesLength;
 
     protected IBoard board;
 
@@ -11,7 +11,7 @@ public abstract class WinChecker implements IWinChecker {
     }
 
     @Override
-    public void setRequiredSeriesLength(int requiredSeriesLength) {
+    public void setRequiredSeriesLength(long requiredSeriesLength) {
         this.requiredSeriesLength = requiredSeriesLength;
     }
 
