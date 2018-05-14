@@ -98,8 +98,17 @@ public class MessagesProvider {
         return messages.getString("winnerAnnouncing");
     }
 
-
     public String draw() {
         return messages.getString("draw");
     }
+
+    public String choiceNotInRange() {
+        return messages.getString("choiceNotInRange");
+    }
+
+    public String shouldBeNumber() {
+        return messages.getString("shouldBeNumber");
+    }
+
+
 }

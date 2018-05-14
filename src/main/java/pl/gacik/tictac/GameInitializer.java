@@ -5,6 +5,8 @@ import pl.gacik.tictac.languages.MessagesProvider;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class GameInitializer {
 
@@ -33,50 +35,81 @@ public class GameInitializer {
         if (in == null) {
             throw new IllegalArgumentException("Supplier cannot be null");
         }
-        try {
-            out.accept("CHOOSE LANGUAGE [NUMBER] / WYBIERZ JĘZYK [NUMER]");
-            int i=0;
-            Map<Integer, MessagesProvider.AVAILABLE_LANGUAGE> tempLanguageMap = new HashMap<>();
-            for(MessagesProvider.AVAILABLE_LANGUAGE language : MessagesProvider.AVAILABLE_LANGUAGE.values()) {
-                out.accept(i + ". " + language.getLocale());
-                tempLanguageMap.put(i, language);
-                i++;
+        boolean notCorrect = false;
+        do {
+            notCorrect = false;
+            try {
+                out.accept("CHOOSE LANGUAGE [NUMBER]");
+                int i = 0;
+                Map<Integer, MessagesProvider.AVAILABLE_LANGUAGE> tempLanguageMap = new HashMap<>();
+                for (MessagesProvider.AVAILABLE_LANGUAGE language : MessagesProvider.AVAILABLE_LANGUAGE.values()) {
+                    out.accept(i + ". " + language.getLocale());
+                    tempLanguageMap.put(i, language);
+                    i++;
+                }
+                int choose = Integer.parseInt(in.get());
+                if (choose < 0 || choose >= i) {
+                    throw new IndexOutOfBoundsException("Your choice is not in available range");
+                }
+                gameSettings.setMessagesProvider(new MessagesProvider(tempLanguageMap.get(choose)));
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println(e.getMessage());
+                notCorrect = true;
+            } catch (NumberFormatException e) {
+                System.out.println("You have to give number in available range");
+                notCorrect = true;
             }
-            int choose = Integer.parseInt(in.get());
-            if (choose<0 || choose>=i) {
-                throw new IndexOutOfBoundsException("Your choice is not in available range");
-            }
-            gameSettings.setMessagesProvider(new MessagesProvider(tempLanguageMap.get(choose)));
-        } catch (Exception e) {
-            throw e; // TODO: Make any handling exceptions
         }
+        while(notCorrect);
     }
 
     public void setPlayer(Consumer<String> out, Supplier<String> in) {
         if (in == null) {
             throw new IllegalArgumentException("Supplier cannot be null");
         }
-        try {
-            out.accept(gameSettings.getMessagesProvider().askForPlayerName() + " " + (gameSettings.getSignHolder().getAttachedPlayers().size() + 1));
-            Player player = new Player(in.get());
-            out.accept(gameSettings.getMessagesProvider().askForPlayerSign());
-            int i=0;
-            Map<Integer, Sign> tempSignMap = new HashMap<>();
-            List<Sign> availableSigns = new LinkedList<>(Arrays.asList(Sign.values()));
-            availableSigns.removeAll(gameSettings.getSignHolder().getUsedSigns());
-            for(Sign sign: availableSigns) {
-                out.accept(i + ". " + sign.getChar());
-                tempSignMap.put(i, sign);
-                i++;
+        boolean notCorrect = false;
+        do {
+            notCorrect = false;
+            try {
+                String playerName="";
+                Pattern noEmptyPattern = Pattern.compile("[\\s]*");
+                do {
+                    notCorrect = false;
+                    out.accept(gameSettings.getMessagesProvider().askForPlayerName() + " " + (gameSettings.getSignHolder().getAttachedPlayers().size() + 1));
+                    playerName = in.get();
+                    Matcher matcher = noEmptyPattern.matcher(playerName);
+                    if(matcher.matches()) {
+                        notCorrect = true;
+                        //TODO message
+                        continue;
+                    }
+                } while (notCorrect);
+                Player player = new Player(playerName);
+                do {
+                    out.accept(gameSettings.getMessagesProvider().askForPlayerSign());
+                    int i = 0;
+                    Map<Integer, Sign> tempSignMap = new HashMap<>();
+                    List<Sign> availableSigns = new LinkedList<>(Arrays.asList(Sign.values()));
+                    availableSigns.removeAll(gameSettings.getSignHolder().getUsedSigns());
+                    for (Sign sign : availableSigns) {
+                        out.accept(i + ". " + sign.getChar());
+                        tempSignMap.put(i, sign);
+                        i++;
+                    }
+                    int choose = Integer.parseInt(in.get());
+                    if (choose < 0 || choose >= i) {
+                        out.accept(gameSettings.getMessagesProvider().choiceNotInRange());
+                    }
+                }
+                gameSettings.getSignHolder().attachPlayer(player, tempSignMap.get(choose));
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println(e.getMessage());
+                notCorrect = true;
+            } catch (NumberFormatException e) {
+                System.out.println("You have to give number in available range");
+                notCorrect = true;
             }
-            int choose = Integer.parseInt(in.get());
-            if (choose<0 || choose>=i) {
-                throw new IndexOutOfBoundsException("Your choice is not in available range");
-            }
-            gameSettings.getSignHolder().attachPlayer(player,tempSignMap.get(choose));
-        } catch (Exception e) {
-            throw e; // TODO: Make any handling exceptions
-        }
+        } while(notCorrect);
     }
 
     public void setWinCheckers(Consumer<String> out, Supplier<String> in) {
