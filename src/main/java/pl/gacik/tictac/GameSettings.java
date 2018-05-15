@@ -19,6 +19,41 @@ public class GameSettings {
         this.board = board;
     }
 
+    public PointsHolder getPointsHolder() {
+        return pointsHolder;
+    }
+
+    public Points getWinPoints() {
+        return winPoints;
+    }
+
+    public Points getDrawPoints() {
+        return drawPoints;
+    }
+
+    public void setDrawPoints(Points drawPoints) {
+        this.drawPoints = drawPoints;
+    }
+
+    private Points drawPoints = new Points(1);
+
+    private Points winPoints = new Points(3);
+
+    public Points getLosePoints() {
+        return losePoints;
+    }
+
+    public void setLosePoints(Points losePoints) {
+        this.losePoints = losePoints;
+    }
+
+    private Points losePoints = new Points(0);
+
+    public void setWinPoints(Points winPoints) {
+        this.winPoints = winPoints;
+    }
+
+    private PointsHolder pointsHolder = new PointsHolder();
 
     private IBoard board;
 

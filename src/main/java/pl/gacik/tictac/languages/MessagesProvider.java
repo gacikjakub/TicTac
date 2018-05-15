@@ -110,5 +110,15 @@ public class MessagesProvider {
         return messages.getString("shouldBeNumber");
     }
 
+    public String coordinatesNotInRange() {
+        return messages.getString("coordinatesNotInRange");
+    }
+
+    public String bookedCoordinates() {
+        return messages.getString("bookedCoordinates");
+    }
+
+
+
 
 }

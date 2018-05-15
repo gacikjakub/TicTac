@@ -20,15 +20,42 @@ public class GameInitializer {
         if (in == null) {
             throw new IllegalArgumentException("Supplier cannot be null");
         }
-        try {
-            out.accept(gameSettings.getMessagesProvider().askForBoardWidth());
-            int width = Integer.parseInt(in.get());
-            out.accept(gameSettings.getMessagesProvider().askForBoardHeight());
-            int height = Integer.parseInt(in.get());
-            gameSettings.setBoard(new LimitedCrossIBoard(width,height));
-        } catch (Exception e) {
-            throw e; // TODO: Make any handling exceptions
-        }
+        int width = -1;
+        int height = -2;
+        boolean notCorrect = false;
+        do {
+            notCorrect = false;
+            try {
+                out.accept(gameSettings.getMessagesProvider().askForBoardWidth());
+                width = Integer.parseInt(in.get());
+                if (width<1 || width > Math.sqrt(Integer.MAX_VALUE)) {
+                    throw new IndexOutOfBoundsException(gameSettings.getMessagesProvider().choiceNotInRange());
+                }
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println(e.getMessage());
+                notCorrect = true;
+            } catch (NumberFormatException e) {
+                System.out.println(gameSettings.getMessagesProvider().shouldBeNumber());
+                notCorrect = true;
+            }
+        } while (notCorrect);
+        do {
+            notCorrect = false;
+            try {
+                out.accept(gameSettings.getMessagesProvider().askForBoardHeight());
+                height = Integer.parseInt(in.get());
+                if (width<1 || width > Math.sqrt(Integer.MAX_VALUE)) {
+                    throw new IndexOutOfBoundsException(gameSettings.getMessagesProvider().choiceNotInRange());
+                }
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println(e.getMessage());
+                notCorrect = true;
+            } catch (NumberFormatException e) {
+                System.out.println(gameSettings.getMessagesProvider().shouldBeNumber());
+                notCorrect = true;
+            }
+        } while (notCorrect);
+        gameSettings.setBoard(new LimitedCrossIBoard(width, height));
     }
 
     public void setLanguage(Consumer<String> out, Supplier<String> in) {
@@ -68,9 +95,7 @@ public class GameInitializer {
             throw new IllegalArgumentException("Supplier cannot be null");
         }
         boolean notCorrect = false;
-        do {
             notCorrect = false;
-            try {
                 String playerName="";
                 Pattern noEmptyPattern = Pattern.compile("[\\s]*");
                 do {
@@ -80,96 +105,154 @@ public class GameInitializer {
                     Matcher matcher = noEmptyPattern.matcher(playerName);
                     if(matcher.matches()) {
                         notCorrect = true;
-                        //TODO message
+                        System.out.println(gameSettings.getMessagesProvider().shouldBeNumber());
                         continue;
                     }
                 } while (notCorrect);
                 Player player = new Player(playerName);
                 do {
-                    out.accept(gameSettings.getMessagesProvider().askForPlayerSign());
-                    int i = 0;
-                    Map<Integer, Sign> tempSignMap = new HashMap<>();
-                    List<Sign> availableSigns = new LinkedList<>(Arrays.asList(Sign.values()));
-                    availableSigns.removeAll(gameSettings.getSignHolder().getUsedSigns());
-                    for (Sign sign : availableSigns) {
-                        out.accept(i + ". " + sign.getChar());
-                        tempSignMap.put(i, sign);
-                        i++;
+                    try {
+                        notCorrect = false;
+                        out.accept(gameSettings.getMessagesProvider().askForPlayerSign());
+                        int i = 0;
+                        Map<Integer, Sign> tempSignMap = new HashMap<>();
+                        List<Sign> availableSigns = new LinkedList<>(Arrays.asList(Sign.values()));
+                        availableSigns.removeAll(gameSettings.getSignHolder().getUsedSigns());
+                        for (Sign sign : availableSigns) {
+                            out.accept(i + ". " + sign.getChar());
+                            tempSignMap.put(i, sign);
+                            i++;
+                        }
+                        int choose = Integer.parseInt(in.get());
+                        if (choose < 0 || choose >= i) {
+                            throw new IndexOutOfBoundsException(gameSettings.getMessagesProvider().choiceNotInRange());
+                        }
+                        gameSettings.getSignHolder().attachPlayer(player, tempSignMap.get(choose));
+                        gameSettings.getPointsHolder().addPlayer(player);
+                    } catch (IndexOutOfBoundsException e) {
+                        System.out.println(e.getMessage());
+                        notCorrect = true;
+                    } catch (NumberFormatException e) {
+                    System.out.println(gameSettings.getMessagesProvider().shouldBeNumber());
+                    notCorrect = true;
                     }
-                    int choose = Integer.parseInt(in.get());
-                    if (choose < 0 || choose >= i) {
-                        out.accept(gameSettings.getMessagesProvider().choiceNotInRange());
-                    }
-                }
-                gameSettings.getSignHolder().attachPlayer(player, tempSignMap.get(choose));
-            } catch (IndexOutOfBoundsException e) {
-                System.out.println(e.getMessage());
-                notCorrect = true;
-            } catch (NumberFormatException e) {
-                System.out.println("You have to give number in available range");
-                notCorrect = true;
-            }
-        } while(notCorrect);
+                } while(notCorrect);
+
     }
 
     public void setWinCheckers(Consumer<String> out, Supplier<String> in) {
         if (in == null) {
             throw new IllegalArgumentException("Supplier cannot be null");
         }
-        try {
-            out.accept(gameSettings.getMessagesProvider().askForWinCheckerMode());
-            out.accept("0. " + gameSettings.getMessagesProvider().yes());
-            out.accept("1. " + gameSettings.getMessagesProvider().no());
-            int choose = Integer.parseInt(in.get());
-            if (choose<0 || choose>=2) {
-                throw new IndexOutOfBoundsException("Your choice is not in available range");
+        boolean notCorrect = false;
+        int choose = 3;
+        do {
+            notCorrect = false;
+            try {
+                out.accept(gameSettings.getMessagesProvider().askForWinCheckerMode());
+                out.accept("0. " + gameSettings.getMessagesProvider().yes());
+                out.accept("1. " + gameSettings.getMessagesProvider().no());
+                choose = Integer.parseInt(in.get());
+                if (choose < 0 || choose >= 2) {
+                    throw new IndexOutOfBoundsException("Your choice is not in available range");
+                }
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println(e.getMessage());
+                notCorrect = true;
+            } catch (NumberFormatException e) {
+                System.out.println(gameSettings.getMessagesProvider().shouldBeNumber());
+                notCorrect = true;
             }
+        } while (notCorrect);
             switch (choose) {
                 case 0 :
-                    out.accept(gameSettings.getMessagesProvider().askForRequiredSeriesLengthToWin());
-                    int seriesLength = Integer.parseInt(in.get());
-                    gameSettings.addWinChecker(new VerticalWinChecker(gameSettings.getBoard()));
-                    gameSettings.addWinChecker(new HorizontalWinChecker(gameSettings.getBoard()));
-                    gameSettings.addWinChecker(new DiagonalBottomLeftToTopRightIWinChecker(gameSettings.getBoard()));
-                    gameSettings.addWinChecker(new DiagonalTopLeftToBottomRightIWinChecker(gameSettings.getBoard()));
-                    for(IWinChecker winChecker : gameSettings.getWinCheckers()) {
-                        winChecker.setRequiredSeriesLength(seriesLength);
-                    }
+                    do {
+                        try {
+                            notCorrect = false;
+                            out.accept(gameSettings.getMessagesProvider().askForRequiredSeriesLengthToWin());
+                            int seriesLength = Integer.parseInt(in.get());
+                            gameSettings.addWinChecker(new VerticalWinChecker(gameSettings.getBoard()));
+                            gameSettings.addWinChecker(new HorizontalWinChecker(gameSettings.getBoard()));
+                            gameSettings.addWinChecker(new DiagonalBottomLeftToTopRightIWinChecker(gameSettings.getBoard()));
+                            gameSettings.addWinChecker(new DiagonalTopLeftToBottomRightIWinChecker(gameSettings.getBoard()));
+                            for (IWinChecker winChecker : gameSettings.getWinCheckers()) {
+                                winChecker.setRequiredSeriesLength(seriesLength);
+                            }
+                        } catch (NumberFormatException e) {
+                            System.out.println(gameSettings.getMessagesProvider().shouldBeNumber());
+                            notCorrect = true;
+                        }
+                    } while (notCorrect);
                     break;
                 case 1:
                     setCustomWinCheckers(out, in);
                     break;
             }
-
-        } catch (Exception e) {
-            throw e; // TODO: Make any handling exceptions
-        }
     }
 
     private void setCustomWinCheckers(Consumer<String> out, Supplier<String> in) {
-        try {
-            out.accept(gameSettings.getMessagesProvider().askForHorizontalSeriesLengthToWin());
-            int choose = Integer.parseInt(in.get());
-            WinChecker winChecker = new HorizontalWinChecker(gameSettings.getBoard());
-            winChecker.setRequiredSeriesLength(choose);
-            gameSettings.addWinChecker(winChecker);
-            out.accept(gameSettings.getMessagesProvider().askForVerticalSeriesLengthToWin());
-            choose = Integer.parseInt(in.get());
-            winChecker = new VerticalWinChecker(gameSettings.getBoard());
-            winChecker.setRequiredSeriesLength(choose);
-            gameSettings.addWinChecker(winChecker);
-            out.accept(gameSettings.getMessagesProvider().askForDecreasingDiagonalSeriesLengthToWin());
-            choose = Integer.parseInt(in.get());
-            winChecker = new DiagonalTopLeftToBottomRightIWinChecker(gameSettings.getBoard());
-            winChecker.setRequiredSeriesLength(choose);
-            gameSettings.addWinChecker(winChecker);
-            out.accept(gameSettings.getMessagesProvider().askForIncreasingDiagonalSeriesLengthToWin());
-            choose = Integer.parseInt(in.get());
-            winChecker = new DiagonalBottomLeftToTopRightIWinChecker(gameSettings.getBoard());
-            winChecker.setRequiredSeriesLength(choose);
-            gameSettings.addWinChecker(winChecker);
-        } catch (Exception e) {
-            throw e; // TODO: Make any handling exceptions
-        }
+        boolean notCorrect = false;
+        int choose;
+        WinChecker winChecker;
+        do {
+            try {
+                out.accept(gameSettings.getMessagesProvider().askForHorizontalSeriesLengthToWin());
+                choose = Integer.parseInt(in.get());
+                winChecker = new HorizontalWinChecker(gameSettings.getBoard());
+                winChecker.setRequiredSeriesLength(choose);
+                gameSettings.addWinChecker(winChecker);
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println(e.getMessage());
+                notCorrect = true;
+            } catch (NumberFormatException e) {
+                System.out.println(gameSettings.getMessagesProvider().shouldBeNumber());
+                notCorrect = true;
+            }
+        } while (notCorrect);
+        do {
+            try {
+                out.accept(gameSettings.getMessagesProvider().askForVerticalSeriesLengthToWin());
+                choose = Integer.parseInt(in.get());
+                winChecker = new VerticalWinChecker(gameSettings.getBoard());
+                winChecker.setRequiredSeriesLength(choose);
+                gameSettings.addWinChecker(winChecker);
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println(e.getMessage());
+                notCorrect = true;
+            } catch (NumberFormatException e) {
+                System.out.println(gameSettings.getMessagesProvider().shouldBeNumber());
+                notCorrect = true;
+            }
+        } while (notCorrect);
+        do {
+            try {
+                out.accept(gameSettings.getMessagesProvider().askForDecreasingDiagonalSeriesLengthToWin());
+                choose = Integer.parseInt(in.get());
+                winChecker = new DiagonalTopLeftToBottomRightIWinChecker(gameSettings.getBoard());
+                winChecker.setRequiredSeriesLength(choose);
+                gameSettings.addWinChecker(winChecker);
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println(e.getMessage());
+                notCorrect = true;
+            } catch (NumberFormatException e) {
+                System.out.println(gameSettings.getMessagesProvider().shouldBeNumber());
+                notCorrect = true;
+            }
+        } while (notCorrect);
+        do {
+            try {
+                out.accept(gameSettings.getMessagesProvider().askForIncreasingDiagonalSeriesLengthToWin());
+                choose = Integer.parseInt(in.get());
+                winChecker = new DiagonalBottomLeftToTopRightIWinChecker(gameSettings.getBoard());
+                winChecker.setRequiredSeriesLength(choose);
+                gameSettings.addWinChecker(winChecker);
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println(e.getMessage());
+                notCorrect = true;
+            } catch (NumberFormatException e) {
+                System.out.println(gameSettings.getMessagesProvider().shouldBeNumber());
+                notCorrect = true;
+            }
+        } while (notCorrect);
     }
 }

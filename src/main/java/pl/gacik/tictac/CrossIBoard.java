@@ -40,7 +40,7 @@ public class CrossIBoard implements IBoard {
     @Override
     public void addPair(ICoordinates2D coordinates, Sign sign) throws FieldCheckException {
         if(boardMap.containsKey(coordinates)) {
-            throw new FieldCheckException("Pair with given key already has been added");
+            throw new AlreadyUsedCoordinates("Pair with given key already has been added");
         }
         updateBorder(coordinates);
         boardMap.put(coordinates, sign);
@@ -67,5 +67,12 @@ public class CrossIBoard implements IBoard {
         return new LinkedList<>(boardMap.keySet());
     }
 
+
+    class AlreadyUsedCoordinates extends FieldCheckException {
+
+        public AlreadyUsedCoordinates(String s) {
+            super(s);
+        }
+    }
 
 }

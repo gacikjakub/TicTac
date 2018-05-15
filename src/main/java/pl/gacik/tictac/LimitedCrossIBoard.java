@@ -23,18 +23,26 @@ public class LimitedCrossIBoard extends CrossIBoard {
     @Override
     public void addPair(ICoordinates2D coordinates, Sign sign) throws FieldCheckException {
         if(!checkIfCoordinatesAreCorrect(coordinates)) {
-            throw new FieldCheckException("Given coordinates are out of max size of board");
+            throw new CoordinatesOutOfBoundException("Given coordinates are out of max size of board");
         }
         if(boardMap.containsKey(coordinates)) {
-            throw new FieldCheckException("Pair with given key already has been added");
+            throw new AlreadyUsedCoordinates("Pair with given key already has been added");
         }
         boardMap.put(coordinates, sign);
     }
 
     @Override
     public boolean hasAvailableField() {
-        return (boardMap.size() < (Math.abs(bordersKeeper.getBorder(BorderDirection.TOP) - bordersKeeper.getBorder(BorderDirection.DOWN)) *
-                Math.abs(bordersKeeper.getBorder(BorderDirection.RIGHT) - bordersKeeper.getBorder(BorderDirection.LEFT))));
+        return (boardMap.size() < (Math.abs(bordersKeeper.getBorder(BorderDirection.TOP) - bordersKeeper.getBorder(BorderDirection.DOWN) + 1) *
+                Math.abs(bordersKeeper.getBorder(BorderDirection.RIGHT) - bordersKeeper.getBorder(BorderDirection.LEFT) + 1)));
+    }
+
+
+    class CoordinatesOutOfBoundException extends FieldCheckException {
+
+        public CoordinatesOutOfBoundException(String s) {
+            super(s);
+        }
     }
 
 }
