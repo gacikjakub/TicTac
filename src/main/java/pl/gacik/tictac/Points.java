@@ -1,6 +1,7 @@
 package pl.gacik.tictac;
 
 import java.util.Collection;
+import java.util.Objects;
 
 public class Points {
 
@@ -11,7 +12,7 @@ public class Points {
     public final int points;
 
     static Points sum(Collection<Points> collection) {
-        return new Points(collection.stream().mapToInt(i -> i.points).sum());
+        return new Points(collection.stream().filter(Objects::nonNull).mapToInt(i -> i.points).sum());
     }
 
     @Override
@@ -19,7 +20,7 @@ public class Points {
         if (!(o instanceof Points)) {
             return false;
         }
-        return (this.points ==((Points) o).points);
+        return (this.points == ((Points) o).points);
     }
 
 }

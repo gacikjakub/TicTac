@@ -1,9 +1,7 @@
 package pl.gacik.tictac;
 
-import pl.gacik.tictac.Player;
-import pl.gacik.tictac.Points;
-
 import java.util.*;
+import java.util.List;
 
 public class PointsHolder {
 
@@ -42,4 +40,25 @@ public class PointsHolder {
     public Set<Player> getAddedPlayers() {
         return new HashSet<>(playerPointsMap.keySet());
     }
+
+    public Optional<Player> getWinner() {
+        return Optional.ofNullable(playerPointsMap.entrySet().stream().max((p1, p2) -> Integer.compare(Points.sum(p1.getValue()).points, Points.sum(p2.getValue()).points)).get().getKey());
+    }
+
+    public Points getHighestDifference() {
+        Iterator<Map.Entry<Player, List<Points>>> iterator = playerPointsMap.entrySet().stream().sorted((player1, player2) -> Integer.compare(Points.sum(player1.getValue()).points, Points.sum(player2.getValue()).points)).iterator();
+        int maxDiff = 0;
+        Points previousPoint = Points.sum(playerPointsMap.get(this.getWinner().get()));
+        while (iterator.hasNext()) {
+            Points currentPoint = Points.sum(iterator.next().getValue());
+            int diff = Math.abs(previousPoint.points - currentPoint.points);
+            if (maxDiff < diff) {
+                maxDiff = diff;
+            }
+            previousPoint = currentPoint;
+        }
+        return new Points(maxDiff);
+    }
+
+
 }

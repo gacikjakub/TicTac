@@ -1,7 +1,7 @@
-package pl.gacik.tictac;
+package pl.gacik.tictac.boards;
 
-import pl.gacik.coordinates.ICoordinates2D;
-import pl.gacik.coordinates.SimpleICoordinates2D;
+import pl.gacik.tictac.coordinates.ICoordinates2D;
+import pl.gacik.tictac.coordinates.SimpleICoordinates2D;
 
 import java.util.List;
 
@@ -21,22 +21,21 @@ public class BoardDrawer {
 
 
     private ICoordinates2D removeFromSignsList() {
-        if(!signs.isEmpty()) {
+        if (!signs.isEmpty()) {
             return signs.remove(0);
-        }
-        else {
+        } else {
             return new SimpleICoordinates2D(Integer.MIN_VALUE, Integer.MIN_VALUE);
         }
     }
 
     private void drawColumnsNumber() {
         builder.append(" ");
-        for(int x = bordersKeeper.getBorder(BorderDirection.LEFT); x<=bordersKeeper.getBorder(BorderDirection.RIGHT); x++) {
-            if(x>-10 && x<100) {
+        for (int x = bordersKeeper.getBorder(BorderDirection.LEFT); x <= bordersKeeper.getBorder(BorderDirection.RIGHT); x++) {
+            if (x > -10 && x < 100) {
                 builder.append(" ");
             }
             builder.append(x);
-            if(x<0 || x>=10) {
+            if (x < 0 || x >= 10) {
                 builder.append(" ");
             } else {
                 builder.append("  ");
@@ -46,7 +45,7 @@ public class BoardDrawer {
     }
 
     private void drawHorizontalBreak() {
-        for(int x = bordersKeeper.getBorder(BorderDirection.LEFT); x<=bordersKeeper.getBorder(BorderDirection.RIGHT); x++) {
+        for (int x = bordersKeeper.getBorder(BorderDirection.LEFT); x <= bordersKeeper.getBorder(BorderDirection.RIGHT); x++) {
             builder.append("+---");
         }
         builder.append("+\n");
@@ -59,22 +58,21 @@ public class BoardDrawer {
     public void draw() {
         ICoordinates2D cord = removeFromSignsList();
         drawColumnsNumber();
-        for(int y = bordersKeeper.getBorder(BorderDirection.TOP); y>=bordersKeeper.getBorder(BorderDirection.DOWN); y--) {
+        for (int y = bordersKeeper.getBorder(BorderDirection.TOP); y >= bordersKeeper.getBorder(BorderDirection.DOWN); y--) {
             drawHorizontalBreak();
             int x = bordersKeeper.getBorder(BorderDirection.LEFT);
             while (x <= bordersKeeper.getBorder(BorderDirection.RIGHT)) {
-                if(cord.getY() == y) {
-                    for (; x <= cord.getX() -1; x++) {
+                if (cord.getY() == y) {
+                    for (; x <= cord.getX() - 1; x++) {
                         builder.append("|   ");
                     }
                     builder.append("| ").append(board.getSign(cord).get().getChar()).append(" ");
                     x++;
-                    if(cord.getX().equals(bordersKeeper.getBorder(BorderDirection.RIGHT))) {
+                    if (cord.getX().equals(bordersKeeper.getBorder(BorderDirection.RIGHT))) {
                         builder.append("|  ").append(y).append("\n");
                     }
                     cord = removeFromSignsList();
-                }
-                else {
+                } else {
                     for (; x <= bordersKeeper.getBorder(BorderDirection.RIGHT); x++) {
                         builder.append("|   ");
                     }

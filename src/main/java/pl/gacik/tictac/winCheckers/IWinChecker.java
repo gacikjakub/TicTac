@@ -1,6 +1,6 @@
-package pl.gacik.tictac;
+package pl.gacik.tictac.winCheckers;
 
-import pl.gacik.coordinates.ICoordinates2D;
+import pl.gacik.tictac.coordinates.ICoordinates2D;
 
 public interface IWinChecker {
 

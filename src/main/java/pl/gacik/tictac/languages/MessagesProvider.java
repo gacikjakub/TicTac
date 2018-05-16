@@ -1,7 +1,5 @@
 package pl.gacik.tictac.languages;
 
-import pl.gacik.tictac.Main;
-
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -118,7 +116,25 @@ public class MessagesProvider {
         return messages.getString("bookedCoordinates");
     }
 
+    public String pointsSummary() {
+        return messages.getString("pointsSummary");
+    }
 
+    public String askForTournamentAmount() {
+        return messages.getString("askForTournamentAmount");
+    }
+
+    public String masterOfGame() {
+        return messages.getString("masterOfGame");
+    }
+
+    public String askForPlayerAmount() {
+        return messages.getString("askForPlayerAmount");
+    }
+
+    public String round() {
+        return messages.getString("round");
+    }
 
 
 }

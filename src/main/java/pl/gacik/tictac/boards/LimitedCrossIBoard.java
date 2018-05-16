@@ -1,6 +1,7 @@
-package pl.gacik.tictac;
+package pl.gacik.tictac.boards;
 
-import pl.gacik.coordinates.ICoordinates2D;
+import pl.gacik.tictac.coordinates.ICoordinates2D;
+import pl.gacik.tictac.Sign;
 
 public class LimitedCrossIBoard extends CrossIBoard {
 
@@ -17,15 +18,15 @@ public class LimitedCrossIBoard extends CrossIBoard {
     }
 
     private boolean checkIfCoordinatesAreCorrect(ICoordinates2D coordinates) {
-        return !(coordinates.getY() > height ||  coordinates.getY() < 1 || coordinates.getX() > width || coordinates.getX() < 1);
+        return !(coordinates.getY() > height || coordinates.getY() < 1 || coordinates.getX() > width || coordinates.getX() < 1);
     }
 
     @Override
     public void addPair(ICoordinates2D coordinates, Sign sign) throws FieldCheckException {
-        if(!checkIfCoordinatesAreCorrect(coordinates)) {
+        if (!checkIfCoordinatesAreCorrect(coordinates)) {
             throw new CoordinatesOutOfBoundException("Given coordinates are out of max size of board");
         }
-        if(boardMap.containsKey(coordinates)) {
+        if (boardMap.containsKey(coordinates)) {
             throw new AlreadyUsedCoordinates("Pair with given key already has been added");
         }
         boardMap.put(coordinates, sign);
@@ -38,7 +39,7 @@ public class LimitedCrossIBoard extends CrossIBoard {
     }
 
 
-    class CoordinatesOutOfBoundException extends FieldCheckException {
+    public class CoordinatesOutOfBoundException extends FieldCheckException {
 
         public CoordinatesOutOfBoundException(String s) {
             super(s);

@@ -1,6 +1,8 @@
 package pl.gacik.tictac;
 
+import pl.gacik.tictac.boards.IBoard;
 import pl.gacik.tictac.languages.MessagesProvider;
+import pl.gacik.tictac.winCheckers.IWinChecker;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -8,12 +10,22 @@ import java.util.List;
 
 public class GameSettings {
 
+    public int getMaxRoundAmount() {
+        return maxRoundAmount;
+    }
+
+    public void setMaxRoundAmount(int maxRoundAmount) {
+        this.maxRoundAmount = maxRoundAmount;
+    }
+
+    private int maxRoundAmount;
+
     public IBoard getBoard() {
         return board;
     }
 
     public void setBoard(IBoard board) {
-        if(board == null) {
+        if (board == null) {
             throw new IllegalArgumentException("board cannot be null");
         }
         this.board = board;
@@ -73,6 +85,10 @@ public class GameSettings {
         return winCheckers.add(winChecker);
     }
 
+    public void clearWinCheckers() {
+        winCheckers = new ArrayList<>();
+    }
+
     public MessagesProvider getMessagesProvider() {
         return messagesProvider;
     }
@@ -82,5 +98,16 @@ public class GameSettings {
     }
 
     private MessagesProvider messagesProvider;
+
+    public int getPlayersAmount() {
+        return playersAmount;
+    }
+
+    public void setPlayersAmount(int playersAmount) {
+        this.playersAmount = playersAmount;
+    }
+
+    private int playersAmount = 0;
+
 
 }
