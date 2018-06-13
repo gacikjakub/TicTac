@@ -1,4 +1,4 @@
-package pl.gacik.tictac;
+package pl.gacik.tictac.boards;
 
 import java.util.Arrays;
 import java.util.HashMap;

@@ -1,8 +1,9 @@
-package pl.gacik.tictac;
+package pl.gacik.tictac.boards;
 
 import java.util.*;
 
-import pl.gacik.coordinates.*;
+import pl.gacik.tictac.coordinates.*;
+import pl.gacik.tictac.Sign;
 
 /**
  * Keeping sign added by Player.
@@ -33,14 +34,15 @@ public class CrossIBoard implements IBoard {
 
     /**
      * Allow to add sign under given coordinates.
+     *
      * @param coordinates - define location of sign
-     * @param sign - define character to print
+     * @param sign        - define character to print
      * @throws FieldCheckException - when sign is already added under given coordinates
      */
     @Override
     public void addPair(ICoordinates2D coordinates, Sign sign) throws FieldCheckException {
-        if(boardMap.containsKey(coordinates)) {
-            throw new FieldCheckException("Pair with given key already has been added");
+        if (boardMap.containsKey(coordinates)) {
+            throw new AlreadyUsedCoordinates("Pair with given key already has been added");
         }
         updateBorder(coordinates);
         boardMap.put(coordinates, sign);
@@ -54,6 +56,7 @@ public class CrossIBoard implements IBoard {
     /**
      * Allow to get sign located under given coordinates.
      * It return Optional.
+     *
      * @param coordinates
      * @return Optional<Sign>
      */
@@ -67,5 +70,12 @@ public class CrossIBoard implements IBoard {
         return new LinkedList<>(boardMap.keySet());
     }
 
+
+    public class AlreadyUsedCoordinates extends FieldCheckException {
+
+        public AlreadyUsedCoordinates(String s) {
+            super(s);
+        }
+    }
 
 }
