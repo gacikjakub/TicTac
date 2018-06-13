@@ -4,9 +4,9 @@ import pl.gacik.coordinates.ICoordinates2D;
 
 import java.util.Optional;
 
-public class HorizontalWinChecker extends WinChecker {
+public class VerticalWinChecker extends WinChecker {
 
-    public HorizontalWinChecker(IBoard board) {
+    public VerticalWinChecker(IBoard board) {
         super(board);
     }
 
@@ -17,28 +17,29 @@ public class HorizontalWinChecker extends WinChecker {
             throw new IllegalArgumentException("There is no sign under given coordinates");
         }
         int counter = 1;
-        counter += seriesGoingLeft(lastMove.getLeft(), lastSign.get());
-        counter += seriesGoingRight(lastMove.getRight(), lastSign.get());
+        counter += seriesGoingDown(lastMove.getBottom(), lastSign.get());
+        counter += seriesGoingUp(lastMove.getTop(), lastSign.get());
         return (counter >= requiredSeriesLength);
     }
 
-    private int seriesGoingLeft(ICoordinates2D coordinates, Sign sign) {
+    private int seriesGoingDown(ICoordinates2D coordinates, Sign sign) {
         if(!board.getSign(coordinates).isPresent()) return 0;
         if(board.getSign(coordinates).get() != sign) return 0;
-        return 1 + seriesGoingLeft(coordinates.getLeft(), sign);
+        return 1 + seriesGoingDown(coordinates.getBottom(), sign);
     }
 
-    private int seriesGoingRight(ICoordinates2D coordinates, Sign sign) {
+    private int seriesGoingUp(ICoordinates2D coordinates, Sign sign) {
         if(!board.getSign(coordinates).isPresent()) return 0;
         if(board.getSign(coordinates).get() != sign) return 0;
-        return 1 + seriesGoingRight(coordinates.getRight(), sign);
+        return 1 + seriesGoingUp(coordinates.getTop(), sign);
     }
 
     @Override
     public void setRequiredSeriesLength(long requiredSeriesLength) {
-//        if(requiredSeriesLength > Math.abs(board.getBordersKeeper().getBorder(BorderDirection.RIGHT) - board.getBordersKeeper().getBorder(BorderDirection.LEFT))) {
+//        if(requiredSeriesLength > Math.abs(board.getBordersKeeper().getBorder(BorderDirection.TOP) - board.getBordersKeeper().getBorder(BorderDirection.DOWN))) {
 //            throw new IllegalArgumentException("Given series length do not allow to win");
 //        }
         super.setRequiredSeriesLength(requiredSeriesLength);
     }
+
 }

@@ -19,7 +19,7 @@ public class TurnHolderTests {
     private Player player3 = Mockito.mock(Player.class);
 
     @Test
-    public void shouldGetNextReturnAddedPlayerAlternately() {
+    public void shouldGetNextPlayerReturnAddedPlayerAlternately() {
         // given
         String[] names = new String[]{"Franc", "Jane", "Alex"};
         when(player1.getName()).thenReturn(names[0]);
@@ -28,7 +28,7 @@ public class TurnHolderTests {
         TurnHolder turnHolder = new TurnHolder(player1, player2, player3);
         // when - then
         for (int i = 0; i < 200; i++) {
-            if (!turnHolder.getNext().getName().equals(names[i % names.length])) {
+            if (!turnHolder.getNextPlayer().getName().equals(names[i % names.length])) {
                 Assert.fail();
             }
         }

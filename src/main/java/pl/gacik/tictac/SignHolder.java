@@ -1,18 +1,31 @@
 package pl.gacik.tictac;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class SignHolder {
 
-    private Map<Sign, Player> signPlayerMap = new HashMap<>();
+    private Map<Sign, Player> signPlayerMap = new LinkedHashMap<>();
 
     public void attachPlayer(Player player, Sign sign) throws IllegalArgumentException {
         if(signPlayerMap.containsKey(sign)) {
-            throw new IllegalArgumentException("This sign has already booked by another player");
+            throw new IllegalArgumentException("This sign has been already booked by another player");
+        }
+        if(signPlayerMap.containsValue(player)) {
+            throw new IllegalArgumentException("This player already have booked sign");
         }
         signPlayerMap.put(sign,player);
+    }
+
+    public List<Player> getAttachedPlayers() {
+        return new LinkedList<>(signPlayerMap.values());
+    }
+
+    public List<Sign> getUsedSigns() {
+        return new LinkedList<>(signPlayerMap.keySet());
+    }
+
+    public Optional<Sign> getBookedSign(Player player){
+        return Optional.ofNullable(signPlayerMap.entrySet().stream().filter(s -> s.getValue() == player).findFirst().get().getKey());
     }
 
     public Optional<Player> getSignOwner(Sign sign){

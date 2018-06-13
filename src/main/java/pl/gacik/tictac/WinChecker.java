@@ -1,11 +1,18 @@
 package pl.gacik.tictac;
 
-import pl.gacik.coordinates.ICoordinates2D;
+public abstract class WinChecker implements IWinChecker {
 
-public interface WinChecker {
+    protected long requiredSeriesLength;
 
-    boolean victoryAchieved(ICoordinates2D lastMove);
+    protected IBoard board;
 
-    void setRequiredSeries(int requiredSeries);
+    public WinChecker(IBoard board) {
+        this.board = board;
+    }
+
+    @Override
+    public void setRequiredSeriesLength(long requiredSeriesLength) {
+        this.requiredSeriesLength = requiredSeriesLength;
+    }
 
 }
