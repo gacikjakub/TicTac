@@ -19,7 +19,7 @@ public class SignHolderTests {
 
     @DataProvider(name = "6PairsOfPlayerName")
     private Object[][] PairsOfPlayerName() {
-        return new Object[][] {{"Zack", "Mark"}, {"Alex", "Ash"}, {"Jane", "Marry"}, {"Kenny", "Michael"}, {"Jack", "Fuck"},
+        return new Object[][]{{"Zack", "Mark"}, {"Alex", "Ash"}, {"Jane", "Marry"}, {"Kenny", "Michael"}, {"Jack", "Fuck"},
                 {"Andrew", "Joanna"}};
     }
 
