@@ -3,8 +3,12 @@ package pl.gacik.tictac;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import pl.gacik.coordinates.ICoordinates2D;
-import pl.gacik.coordinates.SimpleICoordinates2D;
+import pl.gacik.tictac.coordinates.ICoordinates2D;
+import pl.gacik.tictac.coordinates.SimpleICoordinates2D;
+import pl.gacik.tictac.boards.CrossIBoard;
+import pl.gacik.tictac.boards.IBoard;
+import pl.gacik.tictac.winCheckers.HorizontalWinChecker;
+import pl.gacik.tictac.winCheckers.IWinChecker;
 
 import java.util.Random;
 
@@ -15,7 +19,7 @@ public class HorizontalWinCheckerTests {
         int signsAmount = Sign.values().length;
         Object[][] result = new Object[signsAmount][1];
         int counter = 0;
-        for(Sign sign: Sign.values()) {
+        for (Sign sign : Sign.values()) {
             result[counter][0] = sign;
             counter++;
         }
@@ -29,8 +33,8 @@ public class HorizontalWinCheckerTests {
         ICoordinates2D lastCoordinates = null;
         IWinChecker IWinChecker = new HorizontalWinChecker(board);
         IWinChecker.setRequiredSeriesLength(5);
-        for(int i=0; i < 5; i ++) {
-            lastCoordinates = new SimpleICoordinates2D(i,1);
+        for (int i = 0; i < 5; i++) {
+            lastCoordinates = new SimpleICoordinates2D(i, 1);
             board.addPair(lastCoordinates, sign);
         }
         // when - then
@@ -45,8 +49,8 @@ public class HorizontalWinCheckerTests {
         ICoordinates2D lastCoordinates = null;
         IWinChecker IWinChecker = new HorizontalWinChecker(board);
         IWinChecker.setRequiredSeriesLength(10);
-        for(int i=0; i < 8; i ++) {
-            lastCoordinates = new SimpleICoordinates2D(i,1);
+        for (int i = 0; i < 8; i++) {
+            lastCoordinates = new SimpleICoordinates2D(i, 1);
             board.addPair(lastCoordinates, sign);
         }
         // when - then
@@ -60,14 +64,14 @@ public class HorizontalWinCheckerTests {
         IBoard board = new CrossIBoard();
         ICoordinates2D lastCoordinates = null;
         int i = 0;
-        for(;i < 4; i ++) {
-            lastCoordinates = new SimpleICoordinates2D(i,1);
+        for (; i < 4; i++) {
+            lastCoordinates = new SimpleICoordinates2D(i, 1);
             board.addPair(lastCoordinates, sign);
         }
         board.addPair(lastCoordinates.getRight(), randomDifferentSign(sign));
         i++;
-        for(; i < 10; i++) {
-            lastCoordinates = new SimpleICoordinates2D(i,1);
+        for (; i < 10; i++) {
+            lastCoordinates = new SimpleICoordinates2D(i, 1);
             board.addPair(lastCoordinates, sign);
         }
         IWinChecker IWinChecker = new HorizontalWinChecker(board);
@@ -83,8 +87,8 @@ public class HorizontalWinCheckerTests {
         IBoard board = new CrossIBoard();
         ICoordinates2D lastCoordinates = null;
         int i = 0;
-        for(;i < 4; i ++) {
-            lastCoordinates = new SimpleICoordinates2D(i,1);
+        for (; i < 4; i++) {
+            lastCoordinates = new SimpleICoordinates2D(i, 1);
             board.addPair(lastCoordinates, sign);
         }
         IWinChecker IWinChecker = new HorizontalWinChecker(board);
@@ -96,7 +100,7 @@ public class HorizontalWinCheckerTests {
     private Sign randomDifferentSign(Sign s) {
         Sign random = s;
         Random random1 = new Random();
-        while(random == s) {
+        while (random == s) {
             random = Sign.values()[random1.nextInt(Sign.values().length)];
         }
         return random;

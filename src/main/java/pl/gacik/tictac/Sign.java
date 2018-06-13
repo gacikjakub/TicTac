@@ -5,7 +5,10 @@ package pl.gacik.tictac;
  */
 public enum Sign {
     NOUGHT('O'),
-    CROSS('X');
+    CROSS('X'),
+    TRIANGLE('\u0394'),
+    SQUARE('\u25A0'),
+    GAMMA('\u0194');
 
     private final char sign;
 

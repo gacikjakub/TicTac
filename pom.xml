@@ -43,7 +43,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>pl.gacik.tictac.Main</mainClass>
+                            <mainClass>pl.gacik.tictac.GameRunner</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -54,7 +54,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>${exec-maven-plugin.version}</version>
                 <configuration>
-                    <mainClass>pl.gacik.tictac.Main</mainClass>
+                    <mainClass>pl.gacik.tictac.GameRunner</mainClass>
                 </configuration>
             </plugin>
 

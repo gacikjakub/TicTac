@@ -1,6 +1,8 @@
-package pl.gacik.tictac;
+package pl.gacik.tictac.winCheckers;
 
-import pl.gacik.coordinates.ICoordinates2D;
+import pl.gacik.tictac.coordinates.ICoordinates2D;
+import pl.gacik.tictac.Sign;
+import pl.gacik.tictac.boards.IBoard;
 
 import java.util.Optional;
 
@@ -23,14 +25,14 @@ public class HorizontalWinChecker extends WinChecker {
     }
 
     private int seriesGoingLeft(ICoordinates2D coordinates, Sign sign) {
-        if(!board.getSign(coordinates).isPresent()) return 0;
-        if(board.getSign(coordinates).get() != sign) return 0;
+        if (!board.getSign(coordinates).isPresent()) return 0;
+        if (board.getSign(coordinates).get() != sign) return 0;
         return 1 + seriesGoingLeft(coordinates.getLeft(), sign);
     }
 
     private int seriesGoingRight(ICoordinates2D coordinates, Sign sign) {
-        if(!board.getSign(coordinates).isPresent()) return 0;
-        if(board.getSign(coordinates).get() != sign) return 0;
+        if (!board.getSign(coordinates).isPresent()) return 0;
+        if (board.getSign(coordinates).get() != sign) return 0;
         return 1 + seriesGoingRight(coordinates.getRight(), sign);
     }
 

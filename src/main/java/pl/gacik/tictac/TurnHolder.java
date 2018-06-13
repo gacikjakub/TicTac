@@ -8,8 +8,8 @@ public class TurnHolder {
     private Queue<Player> turnQueue = new LinkedBlockingQueue<>();
 
     public TurnHolder(Player... players) {
-        for (Player player :players) {
-            if(player == null) {
+        for (Player player : players) {
+            if (player == null) {
                 throw new IllegalArgumentException("Player cannot be null");
             }
             turnQueue.add(player);
