@@ -1,5 +1,6 @@
-package pl.gacik.tictac;
+package pl.gacik.tictac.boards;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,10 +16,7 @@ public class BordersKeeper {
     }
 
     public BordersKeeper(BordersKeeper bordersKeeper) {
-        this.borderDirectionIntegerMap.put(BorderDirection.TOP, bordersKeeper.borderDirectionIntegerMap.get(BorderDirection.TOP));
-        this.borderDirectionIntegerMap.put(BorderDirection.DOWN, bordersKeeper.borderDirectionIntegerMap.get(BorderDirection.DOWN));
-        this.borderDirectionIntegerMap.put(BorderDirection.RIGHT, bordersKeeper.borderDirectionIntegerMap.get(BorderDirection.RIGHT));
-        this.borderDirectionIntegerMap.put(BorderDirection.LEFT, bordersKeeper.borderDirectionIntegerMap.get(BorderDirection.LEFT));
+        Arrays.stream(BorderDirection.values()).forEach(direction -> borderDirectionIntegerMap.put(direction, bordersKeeper.borderDirectionIntegerMap.get(direction)));
     }
 
     public BordersKeeper() {
