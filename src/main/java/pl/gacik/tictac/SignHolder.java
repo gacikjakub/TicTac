@@ -25,7 +25,8 @@ public class SignHolder {
     }
 
     public Optional<Sign> getBookedSign(Player player) {
-        return Optional.ofNullable(signPlayerMap.entrySet().stream().filter(s -> s.getValue() == player).findFirst().get().getKey());
+        return Optional.ofNullable(signPlayerMap.entrySet().stream().filter(s -> s.getValue() == player).findFirst().
+                orElse(new AbstractMap.SimpleEntry<>(null,null)).getKey());
     }
 
     public Optional<Player> getSignOwner(Sign sign) {

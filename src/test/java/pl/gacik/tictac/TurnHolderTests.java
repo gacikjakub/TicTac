@@ -33,4 +33,26 @@ public class TurnHolderTests {
             }
         }
     }
+
+    @Test
+    public void shouldReturnProperAmountOfPlayers() {
+        // given
+        String[] names = new String[]{"Franc", "Jane", "Alex"};
+        when(player1.getName()).thenReturn(names[0]);
+        when(player2.getName()).thenReturn(names[1]);
+        when(player3.getName()).thenReturn(names[2]);
+        TurnHolder turnHolder = new TurnHolder(player1, player2, player3);
+        // when - then
+        Assert.assertEquals(3, turnHolder.getPlayersAmount());
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void shouldThrowExceptionWhenOneOfPlayerIsNull() {
+        // given
+        String[] names = new String[]{"Franc", "Jane", "Alex"};
+        when(player1.getName()).thenReturn(names[0]);
+        when(player2.getName()).thenReturn(names[1]);
+        // when - then
+        new TurnHolder(player1, player2, null);
+    }
 }

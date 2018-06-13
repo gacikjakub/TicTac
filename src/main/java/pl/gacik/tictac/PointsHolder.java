@@ -42,11 +42,15 @@ public class PointsHolder {
     }
 
     public Optional<Player> getWinner() {
-        return Optional.ofNullable(playerPointsMap.entrySet().stream().max((p1, p2) -> Integer.compare(Points.sum(p1.getValue()).points, Points.sum(p2.getValue()).points)).get().getKey());
+        return Optional.ofNullable(playerPointsMap.entrySet().stream()
+                .max((p1, p2) -> Integer.compare(Points.sum(p1.getValue()).points, Points.sum(p2.getValue()).points))
+                .get().getKey());
     }
 
     public Points getHighestDifference() {
-        Iterator<Map.Entry<Player, List<Points>>> iterator = playerPointsMap.entrySet().stream().sorted((player1, player2) -> Integer.compare(Points.sum(player1.getValue()).points, Points.sum(player2.getValue()).points)).iterator();
+        Iterator<Map.Entry<Player, List<Points>>> iterator = playerPointsMap.entrySet().stream()
+                .sorted((player1, player2) -> Integer.compare(Points.sum(player1.getValue()).points, Points.sum(player2.getValue()).points))
+                .iterator();
         int maxDiff = 0;
         Points previousPoint = Points.sum(playerPointsMap.get(this.getWinner().get()));
         while (iterator.hasNext()) {
