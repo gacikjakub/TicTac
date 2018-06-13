@@ -2,20 +2,20 @@ package pl.gacik.tictac;
 
 import org.mockito.MockitoAnnotations;
 import org.testng.annotations.BeforeClass;
-import pl.gacik.coordinates.ICoordinates2D;
-import pl.gacik.coordinates.SimpleICoordinates2D;
+import pl.gacik.tictac.coordinates.ICoordinates2D;
+import pl.gacik.tictac.coordinates.SimpleICoordinates2D;
 import org.mockito.Mock;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.Assert;
 import org.mockito.Mockito;
+import pl.gacik.tictac.boards.CrossIBoard;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
-
 
 
 public class CrossBoardTests {
@@ -37,17 +37,16 @@ public class CrossBoardTests {
     }
 
 
-
     @DataProvider(name = "10randomUniqueCoordinatesAndSign")
     public Object[][] randomUniqueCoordinatesAndSign() {
         Random generator = new Random();
         Object[][] result = new Object[10][3];
         int x = -100;
         int y = -500;
-        for(int i=0 ; i<10; i++) {
+        for (int i = 0; i < 10; i++) {
             result[i][0] = x += generator.nextInt(50) + 1;
             result[i][1] = y += generator.nextInt(100) + 1;
-            result[i][2] = generator.nextInt(2)==0 ? Sign.NOUGHT: Sign.CROSS;
+            result[i][2] = generator.nextInt(2) == 0 ? Sign.NOUGHT : Sign.CROSS;
         }
         return result;
     }
@@ -56,9 +55,9 @@ public class CrossBoardTests {
     public Object[][] randomTwoSigns() {
         Random generator = new Random();
         Object[][] result = new Object[10][2];
-        for(int i=0 ; i<10; i++) {
-            result[i][0] = generator.nextInt(2)==0 ? Sign.NOUGHT: Sign.CROSS;
-            result[i][1] = generator.nextInt(2)==0 ? Sign.NOUGHT: Sign.CROSS;
+        for (int i = 0; i < 10; i++) {
+            result[i][0] = generator.nextInt(2) == 0 ? Sign.NOUGHT : Sign.CROSS;
+            result[i][1] = generator.nextInt(2) == 0 ? Sign.NOUGHT : Sign.CROSS;
         }
         return result;
     }
@@ -68,8 +67,8 @@ public class CrossBoardTests {
         Random generator = new Random();
         Object[][] result = new Object[10][1];
         List<Integer> list = new LinkedList<>();
-        for(int i=0 ; i<10; i++) {
-            for (int j=0; j<4;j++) {
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 4; j++) {
                 list.add(generator.nextInt());
             }
             result[i][0] = list;
@@ -81,7 +80,7 @@ public class CrossBoardTests {
     public Object[][] binaryRandom() {
         Random generator = new Random();
         Object[][] result = new Object[10][1];
-        for(int i=0 ; i<10; i++) {
+        for (int i = 0; i < 10; i++) {
             result[i][0] = generator.nextInt(2);
         }
         return result;
@@ -96,7 +95,7 @@ public class CrossBoardTests {
     public void coordinatesSignPairCanBeAddedToBoardProperly(Integer x, Integer y, Sign sign) {
         // given
         try {
-            board.addPair(coordinates,sign);
+            board.addPair(coordinates, sign);
         } catch (CrossIBoard.FieldCheckException e) {
             Assert.fail("Field Check Exception has been handled");
         }
@@ -106,8 +105,8 @@ public class CrossBoardTests {
 
     @Test(dataProvider = "10randomUniqueCoordinatesAndSign", expectedExceptions = CrossIBoard.FieldCheckException.class)
     public void addPairThrowFieldCheckExceptionWhenGivenKeyAlreadyExist(Integer x, Integer y, Sign sign) throws CrossIBoard.FieldCheckException {
-        board.addPair(coordinates,sign);
-        board.addPair(coordinates,sign);
+        board.addPair(coordinates, sign);
+        board.addPair(coordinates, sign);
     }
 
 
@@ -117,13 +116,13 @@ public class CrossBoardTests {
     }
 
     private void assertIsGreaterOrTheSame(Integer a, Integer b) {
-        if(a < b) {
+        if (a < b) {
             Assert.fail();
         }
     }
 
     private void assertIsLowerOrTheSame(Integer a, Integer b) {
-        if(a > b) {
+        if (a > b) {
             Assert.fail();
         }
     }
@@ -137,8 +136,8 @@ public class CrossBoardTests {
         ICoordinates2D first = board.getAddedCoordinates().get(0);
         ICoordinates2D second = board.getAddedCoordinates().get(1);
         assertIsGreaterOrTheSame(first.getY(), second.getY());
-        if(first.getY().equals(second.getY())) {
-         assertIsLowerOrTheSame(first.getX(), second.getY());
+        if (first.getY().equals(second.getY())) {
+            assertIsLowerOrTheSame(first.getX(), second.getY());
         }
     }
 

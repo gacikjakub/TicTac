@@ -7,12 +7,12 @@ import pl.gacik.tictac.coordinates.ICoordinates2D;
 import pl.gacik.tictac.coordinates.SimpleICoordinates2D;
 import pl.gacik.tictac.boards.CrossIBoard;
 import pl.gacik.tictac.boards.IBoard;
-import pl.gacik.tictac.winCheckers.HorizontalWinChecker;
+import pl.gacik.tictac.winCheckers.DiagonalTopLeftToBottomRightIWinChecker;
 import pl.gacik.tictac.winCheckers.IWinChecker;
 
 import java.util.Random;
 
-public class HorizontalWinCheckerTests {
+public class DiagonalTopLeftToBottomRightIWinCheckerTests {
 
     @DataProvider(name = "signs")
     private Object[][] signs() {
@@ -31,15 +31,15 @@ public class HorizontalWinCheckerTests {
         // given
         IBoard board = new CrossIBoard();
         ICoordinates2D lastCoordinates = null;
-        IWinChecker IWinChecker = new HorizontalWinChecker(board);
-        IWinChecker.setRequiredSeriesLength(5);
         for (int i = 0; i < 5; i++) {
-            lastCoordinates = new SimpleICoordinates2D(i, 1);
+            lastCoordinates = new SimpleICoordinates2D(i, 5 - i);
             board.addPair(lastCoordinates, sign);
         }
+        IWinChecker IWinChecker = new DiagonalTopLeftToBottomRightIWinChecker(board);
+        IWinChecker.setRequiredSeriesLength(5);
         // when - then
         Assert.assertTrue(IWinChecker.victoryAchieved(lastCoordinates));
-        Assert.assertTrue(IWinChecker.victoryAchieved(lastCoordinates.getLeft().getLeft()));
+        Assert.assertTrue(IWinChecker.victoryAchieved(lastCoordinates.getTopLeft().getTopLeft()));
     }
 
     @Test(dataProvider = "signs")
@@ -47,15 +47,15 @@ public class HorizontalWinCheckerTests {
         // given
         IBoard board = new CrossIBoard();
         ICoordinates2D lastCoordinates = null;
-        IWinChecker IWinChecker = new HorizontalWinChecker(board);
-        IWinChecker.setRequiredSeriesLength(10);
         for (int i = 0; i < 8; i++) {
-            lastCoordinates = new SimpleICoordinates2D(i, 1);
+            lastCoordinates = new SimpleICoordinates2D(i, 8 - i);
             board.addPair(lastCoordinates, sign);
         }
+        IWinChecker IWinChecker = new DiagonalTopLeftToBottomRightIWinChecker(board);
+        IWinChecker.setRequiredSeriesLength(10);
         // when - then
         Assert.assertFalse(IWinChecker.victoryAchieved(lastCoordinates));
-        Assert.assertFalse(IWinChecker.victoryAchieved(lastCoordinates.getLeft().getLeft()));
+        Assert.assertFalse(IWinChecker.victoryAchieved(lastCoordinates.getTopLeft().getTopLeft()));
     }
 
     @Test(dataProvider = "signs")
@@ -65,20 +65,20 @@ public class HorizontalWinCheckerTests {
         ICoordinates2D lastCoordinates = null;
         int i = 0;
         for (; i < 4; i++) {
-            lastCoordinates = new SimpleICoordinates2D(i, 1);
+            lastCoordinates = new SimpleICoordinates2D(i, 4 - i);
             board.addPair(lastCoordinates, sign);
         }
         board.addPair(lastCoordinates.getRight(), randomDifferentSign(sign));
         i++;
         for (; i < 10; i++) {
-            lastCoordinates = new SimpleICoordinates2D(i, 1);
+            lastCoordinates = new SimpleICoordinates2D(i, 10 - i);
             board.addPair(lastCoordinates, sign);
         }
-        IWinChecker IWinChecker = new HorizontalWinChecker(board);
+        IWinChecker IWinChecker = new DiagonalTopLeftToBottomRightIWinChecker(board);
         IWinChecker.setRequiredSeriesLength(8);
         // when - then
         Assert.assertFalse(IWinChecker.victoryAchieved(lastCoordinates));
-        Assert.assertFalse(IWinChecker.victoryAchieved(lastCoordinates.getLeft().getLeft()));
+        Assert.assertFalse(IWinChecker.victoryAchieved(lastCoordinates.getTopLeft().getTopLeft()));
     }
 
     @Test(dataProvider = "signs", expectedExceptions = IllegalArgumentException.class)
@@ -88,10 +88,10 @@ public class HorizontalWinCheckerTests {
         ICoordinates2D lastCoordinates = null;
         int i = 0;
         for (; i < 4; i++) {
-            lastCoordinates = new SimpleICoordinates2D(i, 1);
+            lastCoordinates = new SimpleICoordinates2D(i, 4 - i);
             board.addPair(lastCoordinates, sign);
         }
-        IWinChecker IWinChecker = new HorizontalWinChecker(board);
+        IWinChecker IWinChecker = new DiagonalTopLeftToBottomRightIWinChecker(board);
         IWinChecker.setRequiredSeriesLength(8);
         // when - then
         IWinChecker.victoryAchieved(lastCoordinates.getTop());
