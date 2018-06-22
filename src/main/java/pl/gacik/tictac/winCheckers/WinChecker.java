@@ -1,4 +1,6 @@
-package pl.gacik.tictac;
+package pl.gacik.tictac.winCheckers;
+
+import pl.gacik.tictac.boards.IBoard;
 
 public abstract class WinChecker implements IWinChecker {
 

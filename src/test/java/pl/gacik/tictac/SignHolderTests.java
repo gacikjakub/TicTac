@@ -6,6 +6,10 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Optional;
+
 import static org.mockito.Mockito.when;
 
 public class SignHolderTests {
@@ -19,7 +23,7 @@ public class SignHolderTests {
 
     @DataProvider(name = "6PairsOfPlayerName")
     private Object[][] PairsOfPlayerName() {
-        return new Object[][] {{"Zack", "Mark"}, {"Alex", "Ash"}, {"Jane", "Marry"}, {"Kenny", "Michael"}, {"Jack", "Fuck"},
+        return new Object[][]{{"Zack", "Mark"}, {"Alex", "Ash"}, {"Jane", "Marry"}, {"Kenny", "Michael"}, {"Jack", "Fuck"},
                 {"Andrew", "Joanna"}};
     }
 
@@ -49,4 +53,55 @@ public class SignHolderTests {
         signHolder.attachPlayer(player2, Sign.NOUGHT);
     }
 
+    @Test(dataProvider = "6PairsOfPlayerName", expectedExceptions = IllegalArgumentException.class)
+    public void shouldThrowExceptionWhenSpecifiedPlayerIsAttached(String name1, String name2) throws IllegalArgumentException {
+        // given
+        when(player1.getName()).thenReturn(name1);
+        when(player2.getName()).thenReturn(name2);
+        SignHolder signHolder = new SignHolder();
+        // when - then
+        signHolder.attachPlayer(player1, Sign.NOUGHT);
+        signHolder.attachPlayer(player1, Sign.CROSS);
+    }
+
+
+    @Test(dataProvider = "6PairsOfPlayerName")
+    public void shouldReturnListOfAttachedPlayers(String name1, String name2) {
+        // given
+        when(player1.getName()).thenReturn(name1);
+        when(player2.getName()).thenReturn(name2);
+        SignHolder signHolder = new SignHolder();
+        // when
+        signHolder.attachPlayer(player1, Sign.NOUGHT);
+        signHolder.attachPlayer(player2, Sign.CROSS);
+        // then
+        Assert.assertEquals(signHolder.getAttachedPlayers(), new LinkedList<>(Arrays.asList(player1, player2)));
+
+    }
+
+    @Test(dataProvider = "6PairsOfPlayerName")
+    public void shouldReturnListOfUsedSigns(String name1, String name2) {
+        // given
+        when(player1.getName()).thenReturn(name1);
+        when(player2.getName()).thenReturn(name2);
+        SignHolder signHolder = new SignHolder();
+        // when
+        signHolder.attachPlayer(player1, Sign.NOUGHT);
+        signHolder.attachPlayer(player2, Sign.CROSS);
+        // then
+        Assert.assertEquals(signHolder.getUsedSigns(), new LinkedList<>(Arrays.asList(Sign.NOUGHT, Sign.CROSS)));
+    }
+
+    @Test(dataProvider = "6PairsOfPlayerName")
+    public void shouldReturnSignByPlayer(String name1, String name2) {
+        // given
+        when(player1.getName()).thenReturn(name1);
+        when(player2.getName()).thenReturn(name2);
+        SignHolder signHolder = new SignHolder();
+        // when
+        signHolder.attachPlayer(player1, Sign.NOUGHT);
+        // then
+        Assert.assertEquals(signHolder.getBookedSign(player1), Optional.of(Sign.NOUGHT));
+        Assert.assertEquals(signHolder.getBookedSign(player2), Optional.empty());
+    }
 }
